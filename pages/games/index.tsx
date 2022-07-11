@@ -3,8 +3,8 @@ import React from 'react'
 
 export default function index() {
   return (
-    <Container sx={{marginTop: 20}}>
-        <Typography variant="h4">
+    <Container sx={{marginTop: 10}}>
+        <Typography sx={{fontWeight: 600}} variant="h4">
             Soccer Games
         </Typography>
     </Container>

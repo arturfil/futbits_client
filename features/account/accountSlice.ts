@@ -23,7 +23,7 @@ export const loginUser = createAsyncThunk<User, any>(
             const response = await agent.post("/users/login", data);
             const { token } = response.data
             localStorage.setItem("jwt_gochi", JSON.stringify({token}))
-            return response.data;
+            return response.data.user;
         } catch (error:any) {
             return thunkAPI.rejectWithValue({error: error.data})
         }
@@ -47,7 +47,7 @@ export const accountSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(loginUser.fulfilled, (state, action) => {
-            state.errors = action.payload;
+            state.user = action.payload
             state.loggedIn = true;
         });
     }

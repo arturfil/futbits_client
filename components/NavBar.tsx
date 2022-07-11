@@ -15,8 +15,8 @@ import {
   List,
   ListItem,
 } from "@mui/material";
-import AdbIcon from "@mui/icons-material/Adb";
 import MenuIcon from "@mui/icons-material/Menu";
+import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import Link from "next/link";
@@ -26,9 +26,13 @@ import { setLogOut } from "../features/account/accountSlice";
 const pages = [
   { title: "Home", link: "/" },
   { title: "Games", link: "/games" },
-  // { title: "Fields", link: "/fields" },
+  { title: "Fields", link: "/fields"},
+  { title: "Groups", link: "/groups"}
 ];
-const settings = ["Profile", "Settings"];
+const settings = [
+  {title: "Profile", link: "/profile"}, 
+  {title: "Settings", link: "/settings"}
+];
 
 export default function NavBar() {
   const dispatch = useAppDispatch();
@@ -47,14 +51,15 @@ export default function NavBar() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{backgroundColor: '#1a82af'}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
+          <SportsSoccerIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
-            component="a"
+            component={Link}
             href="/"
             sx={{
               mr: 2,
@@ -66,7 +71,7 @@ export default function NavBar() {
               textDecoration: "none",
             }}
           >
-            LOGO
+            FutBit
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -114,7 +119,8 @@ export default function NavBar() {
               </List>
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+          <SportsSoccerIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+          {/* <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} /> */}
           <Typography
             variant="h5"
             noWrap
@@ -168,8 +174,8 @@ export default function NavBar() {
                   onClose={handleCloseUserMenu}
                 >
                   {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">{setting}</Typography>
+                    <MenuItem key={setting.link} onClick={handleCloseUserMenu}>
+                      <Typography component={Link} href={setting.link} textAlign="center">{setting.title}</Typography>
                     </MenuItem>
                   ))}
                   <MenuItem onClick={logOut}>
@@ -178,10 +184,11 @@ export default function NavBar() {
                 </Menu>
               </>
             ) : (
-              <Link href="/login">
+              <Link href="/auth/login">
                 <Button
                   className="red-button"
                   variant="contained"
+                  sx={{color: 'black', textTransform: 'capitalize'}}
                 >
                   Login
                 </Button>

@@ -1,19 +1,69 @@
-import { Container, Typography } from '@mui/material'
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import { useEffect, useState } from 'react'
-import { setLoggedIn } from '../features/account/accountSlice'
-import { useAppDispatch } from '../store/hooks'
-import styles from '../styles/Home.module.css'
+import { Container, Grid, Paper, Typography } from "@mui/material";
+import type { NextPage } from "next";
+import { useEffect } from "react";
+import DataCard from "../components/DataCard";
+import { getAllFields } from "../features/fields/fieldSlice";
+import { getAllGames } from "../features/games/gameSlice";
+import { getAllGroups } from "../features/groups/groupSlice";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 
 const Home: NextPage = () => {
+  const dispatch = useAppDispatch();
+  const { fields } = useAppSelector((state) => state.field);
+  const { games } = useAppSelector((state) => state.games);
+  const { groups } = useAppSelector((state) => state.groups);
+
+  useEffect(() => {
+    dispatch(getAllFields());
+    dispatch(getAllGames());
+    dispatch(getAllGroups())
+  }, []);
 
   return (
-    <Container sx={{marginTop: 10}}>
-      <Typography sx={{fontWeight: 600}} variant="h4">Home Page</Typography>
+    <Container sx={{ marginTop: 10, paddingBottom: 5 }} maxWidth="lg">
+      <Typography sx={{ fontWeight: 600 }} variant="h4">
+        Home Page
+      </Typography>
+      <Typography sx={{ marginTop: 3 }} variant="h6">
+        Fields
+      </Typography>
+      { fields ? (
+        <Grid sx={{ marginBottom: 3 }} container spacing={3}>
+          {fields?.map((field) => (
+            <Grid key={field.id} item xs={3}>
+              <DataCard data={field} color="#1a82af"/>
+            </Grid>
+          ))}
+        </Grid>
+      ): (
+        <Typography color="red">No Fields Created Yet</Typography>
+      )}
+      <Typography variant="h6">Games</Typography>
+      { games ? (
+        <Grid sx={{ marginBottom: 3 }} container spacing={3}>
+          {games?.map((game) => (
+            <Grid key={game.id} item xs={4} md={4} lg={3}>
+              <DataCard data={game} color="1a82af"/>
+            </Grid>
+          ))}
+        </Grid>
+      ): (
+        <Typography color="red">No Games Yet</Typography>
+      )}
+      <Typography variant="h6">Groups</Typography>
+      {groups ? (
+        <Grid container spacing={3}>
+          {groups?.map((group) => (
+            <Grid key={group.id} item xs={4} md={4} lg={3}>
+              <DataCard data={group} color="#1aaaaf"/>
+            </Grid>
+          ))}
+        </Grid>
+      ) : (
+        <Typography color="red">No Groups Created Yet</Typography>
+      )}
     </Container>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

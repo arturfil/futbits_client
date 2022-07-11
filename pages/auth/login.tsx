@@ -1,9 +1,10 @@
 import { Button, Container, Grid, TextField, Typography } from "@mui/material";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { ChangeEvent, useState, MouseEvent } from "react";
 import { toast } from "react-toastify";
-import { loginUser } from "../features/account/accountSlice";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { loginUser } from "../../features/account/accountSlice";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 export default function login() {
   const dispatch = useAppDispatch();
@@ -63,11 +64,23 @@ export default function login() {
           </Grid>
 
           <Grid item xs={12}>
-            <Button onClick={handleSubmit} variant="contained">
+            <Button fullWidth onClick={handleSubmit} variant="contained">
               Login
             </Button>
           </Grid>
           
+          <Grid  item xs={6}>
+            <Typography>
+              Dont have an account yet?  
+            </Typography>
+          </Grid>
+          
+          <Grid item xs={6}>
+            <Typography color="blue">
+              <Link href="/auth/signup" style={{color: "blue!important", textDecoration: 'underline'}}>Sign up here! </Link>
+            </Typography>
+          </Grid>
+
         </Grid>
       </Grid>
     </Container>

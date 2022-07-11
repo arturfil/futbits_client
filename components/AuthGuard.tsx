@@ -21,7 +21,7 @@ export default function AuthGuard({ children }: { children: JSX.Element }) {
     }
     if (!tkn) { 
       console.log("No token!", tkn);
-      router.push("/login");
+      router.push("/auth/login");
       return;
     }
     if (JSON.parse(tkn).token) {
