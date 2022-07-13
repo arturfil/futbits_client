@@ -51,28 +51,30 @@ export default function NavBar() {
   };
 
   return (
-    <AppBar position="static" sx={{backgroundColor: '#1a82af'}}>
-      <Container maxWidth="xl">
+    <AppBar position="static" sx={{backgroundColor: '#fafafa', width: "100vw", color: "black"}}>
+      <Container fixed>
         <Toolbar disableGutters>
           {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
-          <SportsSoccerIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component={Link}
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            FutBit
-          </Typography>
+          <SportsSoccerIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1, color: 'black'}} />
+          <Box sx={{display: {xs: 'none'}}}>
+            <Typography
+              variant="h6"
+              noWrap
+              color="black"
+              component={Link}
+              href="/"
+              sx={{
+                mr: 2,
+                display: 'none',
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                textDecoration: "none",
+              }}
+            >
+              FutBit
+            </Typography>
+          </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -81,7 +83,6 @@ export default function NavBar() {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="inherit"
             >
               <MenuIcon />
             </IconButton>
@@ -119,8 +120,6 @@ export default function NavBar() {
               </List>
             </Menu>
           </Box>
-          <SportsSoccerIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          {/* <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} /> */}
           <Typography
             variant="h5"
             noWrap
@@ -133,17 +132,17 @@ export default function NavBar() {
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
-              color: "inherit",
+              color: "black",
               textDecoration: "none",
             }}
           >
-            LOGO
+            FutBit
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }}}>
             <List sx={{display: "flex", justifyContent: 'space-evenly'}}>
               {pages.map((page) => (
                 <Link style={{display: "flex", justifyContent: "space-evenly"}} key={page.link} href={page.link}>
-                  <Button sx={{ color: "white", mx: 3, textTransform: "capitalize"}}>{page.title}</Button>
+                  <Button sx={{ color: "black", mx: 3, textTransform: "capitalize"}}>{page.title}</Button>
                 </Link>
               ))}
             </List>
@@ -154,7 +153,7 @@ export default function NavBar() {
               <>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <AccountCircleIcon sx={{ color: "white" }} />
+                    <AccountCircleIcon sx={{ color: "black" }} />
                   </IconButton>
                 </Tooltip>
                 <Menu

@@ -10,7 +10,7 @@ import { setLogOut } from "../features/account/accountSlice";
 export default function SideNav() {
   const dispatch = useAppDispatch();
   const { loggedIn } = useAppSelector(state => state.account);
-  const [display, setDisplay] = useState<boolean>(false);
+  const [display, setDisplay] = useState<boolean>(true);
 
   const toggleMenu = () => setDisplay(!display);
 
@@ -21,17 +21,22 @@ export default function SideNav() {
 
   return (
     <Grid
-      xs={ display ? 3 : 0}
+      item
+      xs={ display ? 6 : 0}
+      md={ display ? 2 : 0}
       sx={{
+        py: 3,
         px: 3,
-        backgroundColor: "#1a82af",
-        height: "100vh",
+        display: {xs: 6, md: 2},
+        backgroundColor: "#0a0a0a",
+        minHeight: "100vh",
         color: "white",
+        boxShadow: "0 2px 2px 2px lightgrey",
         fontWeight: 600,
       }}
     >
-      <MenuIcon onClick={toggleMenu} />
-      <Grid style={{ display: display ? "flex" : "none" }} 
+      <MenuIcon sx={{color: "white"}} onClick={toggleMenu} />
+      <Grid style={{ display: display ? "flex" : "none", margin: "0 auto" }} 
         sx={{flexDirection: 'column'}}
       >
         <Grid

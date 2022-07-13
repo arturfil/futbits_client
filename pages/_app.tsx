@@ -25,18 +25,20 @@ function MyApp(props: AppProps) {
   return (
     <Provider store={store}>
       <RoutesWrapper {...pageProps}>
-        <NavBar/>
         <Grid container>
           <SideNav/>  
           <Grid item xs={9}>
-            <ToastContainer theme="colored" position="bottom-right"/>
-            {Component.requiredAuth ? (
-              <AuthGuard>
+            <NavBar/>
+            <Grid sx={{display:"flex", flexDirection: "column", margin: "0 auto"}} item xs={9}>
+              <ToastContainer theme="colored" position="bottom-right"/>
+              {Component.requiredAuth ? (
+                <AuthGuard>
+                  <Component {...pageProps} />
+                </AuthGuard>
+              ): (
                 <Component {...pageProps} />
-              </AuthGuard>
-            ): (
-              <Component {...pageProps} />
-            )}
+              )}
+            </Grid>
           </Grid>
 
         </Grid>

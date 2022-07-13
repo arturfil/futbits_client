@@ -19,16 +19,31 @@ export const loginUser = createAsyncThunk<User, any>(
     "account/loginUser",
     async (data, thunkAPI) => {
         try {
-            toast.success("Successfully Logged In")
             const response = await agent.post("/users/login", data);
             const { token } = response.data
             localStorage.setItem("jwt_gochi", JSON.stringify({token}))
+            toast.success("Successfully Logged In")
             return response.data.user;
         } catch (error:any) {
+            toast.error("Wrong credentials");
             return thunkAPI.rejectWithValue({error: error.data})
         }
     }
 );
+
+export const signupUser = createAsyncThunk<User, User>(
+    "account/signupUser",
+    async (data, thunkAPI) => {
+        try {
+            const response = await agent.post("/users/signup", data);
+            toast.success("Successfully Signed Up")
+            return response.data;
+        } catch (error:any) {
+            toast.error("Couldn't Signup, please try again");
+            return thunkAPI.rejectWithValue({error: error.data});
+        }
+    }
+)
 
 export const accountSlice = createSlice({
     name: "account",
