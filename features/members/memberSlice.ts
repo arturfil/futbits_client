@@ -14,11 +14,11 @@ const initialState: MemberState = {
     errors: []
 }
 
-export const getAllMembers = createAsyncThunk<Member[]>(
+export const getAllMembers = createAsyncThunk<Member[], string | undefined | any>(
     "memeber/getAllMember",
-    async (_, thunkAPI) => {
+    async (id, thunkAPI) => {
         try {
-            const response = await agent.get("/members");
+            const response = await agent.get(`/members/${id}`);
             return response.data;
         } catch (error) {
             return thunkAPI.rejectWithValue({error});

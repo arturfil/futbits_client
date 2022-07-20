@@ -40,6 +40,18 @@ export const createNewGroup = createAsyncThunk<Group, Object>(
     }
 )
 
+export const getSingleGroup = createAsyncThunk<Group, string | any>(
+    "group/getSingleGroup",
+    async (id, thunkAPI) => {
+        try {
+            const response:any = await agent.get(`/groups/group/${id}`);
+            return response.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue({error});
+        }
+    }
+)
+
 export const groupSlice = createSlice({
     name: "group",
     initialState,
@@ -52,6 +64,9 @@ export const groupSlice = createSlice({
         builder.addCase(getAllGroups.fulfilled, (state, action) => {
             state.groups = action.payload;
         });
+        builder.addCase(getSingleGroup.fulfilled, (state, action) => {
+            state.singleGroup = action.payload;
+        })
     }
 });
 

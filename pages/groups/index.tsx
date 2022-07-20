@@ -29,7 +29,7 @@ export default function index() {
       <Grid container spacing={3}>
         {groups?.map((group) => (
           <Grid key={group.id} item xs={12} sm={6} md={4} lg={3}>
-            <DataCard data={group} color="#1a82af" />
+            <DataCard type="groups" data={group} color="#1a82af" />
           </Grid>
         ))}
       </Grid>

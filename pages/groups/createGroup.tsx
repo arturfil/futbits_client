@@ -12,7 +12,7 @@ export default function createGroup() {
   const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     dispatch(createNewGroup({name})).then((res: any) => { // Group Object
-      dispatch(createMember({player_id: user?.id, group_id: res.payload.id, member_type: "adming"}));
+      dispatch(createMember({player_id: user?.id, group_id: res.payload.id, member_type: "admin"}));
     })
     
     setName("");
@@ -20,33 +20,44 @@ export default function createGroup() {
 
   return (
     <Container sx={{ marginTop: 10, display: "flex", flexDirection: "column"}}>
-      <Typography sx={{margin: "0 auto"}} variant="h4" fontWeight={600}>Create Group</Typography>
-      <Grid
-        item
-        sx={{
-          padding: 5,
-          justifyContent: "center",
-          borderRadius: 3,
-          minWidth: 400,
-          maxWidth: 1000,
-          margin: "20px auto",
-          backgroundColor: "lightgrey",
-        }}
-      >
+      <Grid container>
+        <Grid item xs={12}>
+          <Typography 
+            sx={{margin: "0 auto"}} 
+            variant="h4" 
+            fontWeight={600}
+          >
+            Create Group
+          </Typography>
+        </Grid>
         <Grid
-          container
-          spacing={3}
+          item
+          xs={12}
+          sx={{
+            padding: 5,
+            justifyContent: "center",
+            borderRadius: 3,
+            minWidth: 400,
+            maxWidth: 1000,
+            margin: "20px auto",
+            backgroundColor: "lightgrey",
+          }}
         >
-          <Grid item xs={12}>
-            <Typography variant="h5">Name of Group</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <TextField value={name} onChange={(e) => setName(e.target.value)} fullWidth label="Name" />
-          </Grid>
-          <Grid item xs={12}>
-            <Button onClick={handleSubmit} fullWidth variant="contained">
-              Create
-            </Button>
+          <Grid
+            container
+            spacing={3}
+          >
+            <Grid item xs={12}>
+              <Typography variant="h5">Name of Group</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField value={name} onChange={(e) => setName(e.target.value)} fullWidth label="Name" />
+            </Grid>
+            <Grid item xs={12}>
+              <Button onClick={handleSubmit} fullWidth variant="contained">
+                Create
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>

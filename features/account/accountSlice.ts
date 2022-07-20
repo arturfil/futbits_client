@@ -5,16 +5,42 @@ import { User } from "../../interfaces/User";
 
 interface AccountState {
     user: User | null;
+    users: User[] | null;
     loggedIn: boolean;
     errors: Error[] | any;
 }
 
 const initialState: AccountState = {
     user: null,
+    users: null,
     loggedIn: false,
     errors: []
 }
 
+export const getUserByToken = createAsyncThunk<User>(
+    "account/getUserByToken",
+    async (_, thunkAPI) => {
+        try {
+            const response = await agent.get("/users/bytoken");
+            return response.data;
+        } catch (error) {
+            thunkAPI.dispatch(setLogOut())
+            return thunkAPI.rejectWithValue({error});
+        }
+    }
+)
+
+export const searchUser = createAsyncThunk<User[], string>(
+    "account/searchUser",
+    async (word, thunkAPI) => {
+        try {
+            const response = await agent.get(`/users/search?keyword=${word}`);
+            return response.data.users;
+        } catch (error) {
+            return thunkAPI.rejectWithValue({error});
+        }
+    }
+)
 export const loginUser = createAsyncThunk<User, any>( 
     "account/loginUser",
     async (data, thunkAPI) => {
@@ -64,6 +90,12 @@ export const accountSlice = createSlice({
         builder.addCase(loginUser.fulfilled, (state, action) => {
             state.user = action.payload
             state.loggedIn = true;
+        });
+        builder.addCase(getUserByToken.fulfilled, (state, action) => {
+            state.user = action.payload;
+        });
+        builder.addCase(searchUser.fulfilled, (state, action) => {
+            state.users = action.payload;
         });
     }
 });

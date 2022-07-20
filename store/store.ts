@@ -11,7 +11,8 @@ export const store = configureStore({
         account: accountReducer,
         field: fieldReducer,
         games: gameReducer,
-        groups: groupReducer
+        groups: groupReducer,
+        members: memberReducer
     }
 });
 
