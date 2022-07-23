@@ -30,18 +30,27 @@ export default function Group() {
             </Link>
           </Grid>
           <Grid item xs={12}>
-            <TableContainer component={Paper}>
+            <TableContainer 
+              component={Paper} 
+              elevation={0} 
+              sx={{border: '1px solid lightgrey'}}>
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Name</TableCell>
-                    <TableCell>Member Type</TableCell>
+                    <TableCell>
+                      <Typography variant="h6" 
+                        fontSize={16} fontWeight={600}>Name</Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant="h6" 
+                        fontSize={16} fontWeight={600}>Member Type</Typography>
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {members && members?.map(mem => (
                     <TableRow key={mem.id}>
-                      <TableCell>{mem.last_name} {mem.first_name}</TableCell>
+                      <TableCell>{mem.first_name} {mem.last_name}</TableCell>
                       <TableCell>{mem.member_type }</TableCell>
                     </TableRow>
                   ))}
