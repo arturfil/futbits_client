@@ -12,7 +12,7 @@ export default function createGroup() {
   const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     dispatch(createNewGroup({name})).then((res: any) => { // Group Object
-      dispatch(createMember({player_id: user?.id, group_id: res.payload.id, member_type: "admin"}));
+      dispatch(createMember({user_id: user?.id, group_id: res.payload.id, member_type: "admin"}));
     })
     
     setName("");

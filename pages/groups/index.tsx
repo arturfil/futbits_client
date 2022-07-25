@@ -35,7 +35,7 @@ export default function index() {
       </Grid>
       <Grid sx={{ marginTop: 3 }}>
         <Link href="/groups/createGroup">
-          <Button sx={{ borderRadius: 5 }} variant="contained">
+          <Button disableElevation sx={{textTransform: 'capitalize', borderRadius: 5 }} variant="contained">
             Create Group
           </Button>
         </Link>

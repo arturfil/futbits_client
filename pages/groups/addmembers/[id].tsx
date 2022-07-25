@@ -31,8 +31,8 @@ export default function addMember() {
   const id = router.query["id"];
   const [term, setTerm] = useState<string>("");
   const [user, setUser] = useState<Member>({
-    player_id: "",
-    group_id: 0,
+    user_id: "",
+    group_id: "",
     member_type: "",
   });
   const dispatch = useAppDispatch();
@@ -43,7 +43,7 @@ export default function addMember() {
   }
 
   function onSelectUser(e: MouseEvent<HTMLButtonElement>, id: string) {
-    setUser({...user, player_id: id});
+    setUser({...user, user_id: id});
   }
 
   function handleSubmit(e: MouseEvent<HTMLButtonElement>) {
@@ -52,7 +52,7 @@ export default function addMember() {
   }
 
   useEffect(() => {
-    return setUser({ ...user, group_id: Number(id) });
+    return setUser({ ...user, group_id: id });
   }, [id])
 
   return (
@@ -63,7 +63,7 @@ export default function addMember() {
         </Grid>
         <Grid item xs={12}>
           <Typography fontWeight={600} variant="h6">Member to Submit:</Typography>
-          <Typography>member id: {user.player_id ? user.player_id : "No user selected yet"}</Typography>
+          <Typography>member id: {user.user_id ? user.user_id : "No user selected yet"}</Typography>
           <Typography>group id: {user.group_id}</Typography>
           <Typography>member type: {user.member_type ? user.member_type : 'member type not chosen'}</Typography>
         </Grid>

@@ -1,8 +1,8 @@
 export interface Member {
-    id?: number;
-    player_id: string;
+    id?: string;
+    user_id: string;
     member_type: string;
-    group_id: number;
+    group_id: string | string[] | undefined;
     first_name?: string;
     last_name?: string;
     email?: string;

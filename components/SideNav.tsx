@@ -19,7 +19,7 @@ export default function SideNav() {
     dispatch(setLogOut());
   };
 
-  return (
+    return (
     <Grid
       item
       xs={ display ? 6 : 0}
@@ -29,6 +29,7 @@ export default function SideNav() {
         px: 3,
         display: {xs: 6, md: 2},
         backgroundColor: "#0a0a0a",
+        backgroundImage: 'linear-gradient(135deg, #0b0433, #594e9b)',
         minHeight: "100vh",
         color: "white",
         boxShadow: "0 2px 2px 2px lightgrey",

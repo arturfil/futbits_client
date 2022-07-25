@@ -185,9 +185,10 @@ export default function NavBar() {
             ) : (
               <Link href="/auth/login">
                 <Button
+                  disableElevation
                   className="red-button"
                   variant="contained"
-                  sx={{color: 'black', textTransform: 'capitalize'}}
+                  sx={{color: 'white', textTransform: 'capitalize'}}
                 >
                   Login
                 </Button>

@@ -31,7 +31,7 @@ export default function DataCard({ data, color, type }: Props) {
             </Typography>
           </Grid>
           {data.start_time && (
-            <Grid xs={12}>
+            <Grid item xs={12}>
               <Typography color="white" fontWeight={600}>
                 {new Date(data.start_time).toLocaleDateString()}
               </Typography>
