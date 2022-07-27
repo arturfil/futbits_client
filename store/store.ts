@@ -5,6 +5,7 @@ import fieldReducer from '../features/fields/fieldSlice';
 import gameReducer from '../features/games/gameSlice';
 import groupReducer from '../features/groups/groupSlice';
 import memberReducer from '../features/members/memberSlice';
+import profileReducer from '../features/profile/profileSlice';
 
 export const store = configureStore({
     reducer: {
@@ -12,7 +13,8 @@ export const store = configureStore({
         field: fieldReducer,
         games: gameReducer,
         groups: groupReducer,
-        members: memberReducer
+        members: memberReducer,
+        profile: profileReducer
     }
 });
 

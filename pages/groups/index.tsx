@@ -3,16 +3,19 @@ import { Container } from "@mui/system";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import DataCard from "../../components/DataCard";
-import { getAllGroups } from "../../features/groups/groupSlice";
+import { getAllGroupOfAUser, getAllGroups } from "../../features/groups/groupSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 export default function index() {
   const dispatch = useAppDispatch();
   const { groups } = useAppSelector((state) => state.groups);
+  const { user } = useAppSelector((state) => state.account);
+  console.log("AQUI", user?.id);
 
   useEffect(() => {
-    dispatch(getAllGroups());
-  }, []);
+    if (!user?.id) return;
+    dispatch(getAllGroupOfAUser(user?.id!));
+  }, [user, user?.id]);
 
   return (
     <Container

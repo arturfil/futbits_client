@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import DataCard from "../components/DataCard";
 import { getAllFields } from "../features/fields/fieldSlice";
 import { getAllGames } from "../features/games/gameSlice";
-import { getAllGroups } from "../features/groups/groupSlice";
+import { getAllGroupOfAUser, getAllGroups } from "../features/groups/groupSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 
 const Home: NextPage = () => {
@@ -12,12 +12,17 @@ const Home: NextPage = () => {
   const { fields } = useAppSelector((state) => state.field);
   const { games } = useAppSelector((state) => state.games);
   const { groups } = useAppSelector((state) => state.groups);
+  const { user } = useAppSelector((state) => state.account);
 
   useEffect(() => {
     dispatch(getAllFields());
     dispatch(getAllGames());
-    dispatch(getAllGroups())
   }, []);
+  
+  useEffect(() => {
+    if (!user?.id) return;
+    dispatch(getAllGroupOfAUser(user?.id));
+  }, [user?.id])
 
   return (
     <Container sx={{ marginTop: 10, paddingBottom: 5 }} maxWidth="lg">

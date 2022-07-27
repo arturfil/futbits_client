@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import agent from "../../api/agent";
 import { Member } from "../../interfaces/Member";
 
@@ -31,6 +32,7 @@ export const createMember = createAsyncThunk<Member, Object>(
     async (data, thunkAPI) => {
         try {
             const response = await agent.post("/members/create", data);
+            toast.success("Added member successfully");
             return response.data;
         } catch (error) {
             return thunkAPI.rejectWithValue({error});

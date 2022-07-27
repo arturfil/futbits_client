@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import build from "next/dist/build";
 import { toast } from "react-toastify";
 import agent from "../../api/agent";
 import { Group } from "../../interfaces/Group";
@@ -23,6 +24,19 @@ export const getAllGroups = createAsyncThunk<Group[]>(
             return response.data.groups;
         } catch (error) {
             return thunkAPI.rejectWithValue({error})
+        }
+    }
+)
+
+export const getAllGroupOfAUser = createAsyncThunk<Group[], string>(
+    "group/getAllGroupsFromUser",
+    async (user_id, thunkAPI) => {
+        try {
+            console.log(user_id);
+            const response = await agent.get(`/groups/${user_id}`);
+            return response.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue({error});
         }
     }
 )
@@ -66,7 +80,10 @@ export const groupSlice = createSlice({
         });
         builder.addCase(getSingleGroup.fulfilled, (state, action) => {
             state.singleGroup = action.payload;
-        })
+        });
+        builder.addCase(getAllGroupOfAUser.fulfilled, (state, action) => {
+            state.groups = action.payload;
+        });
     }
 });
 
