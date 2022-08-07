@@ -6,6 +6,7 @@ import gameReducer from '../features/games/gameSlice';
 import groupReducer from '../features/groups/groupSlice';
 import memberReducer from '../features/members/memberSlice';
 import profileReducer from '../features/profile/profileSlice';
+import reportReducer from '../features/reports/reportsSlice';
 
 export const store = configureStore({
     reducer: {
@@ -14,7 +15,8 @@ export const store = configureStore({
         games: gameReducer,
         groups: groupReducer,
         members: memberReducer,
-        profile: profileReducer
+        profile: profileReducer,
+        report: reportReducer
     }
 });
 

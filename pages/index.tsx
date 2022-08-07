@@ -48,7 +48,7 @@ const Home: NextPage = () => {
         <Grid sx={{ marginBottom: 3 }} container spacing={3}>
           {games?.map((game) => (
             <Grid key={game.id} item xs={6} md={4} lg={3}>
-              <DataCard type="groups" data={game} color="#ffccaa"/>
+              <DataCard type="games" data={game} color="#ffccaa"/>
             </Grid>
           ))}
         </Grid>

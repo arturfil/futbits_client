@@ -32,7 +32,6 @@ export const getAllGroupOfAUser = createAsyncThunk<Group[], string>(
     "group/getAllGroupsFromUser",
     async (user_id, thunkAPI) => {
         try {
-            console.log(user_id);
             const response = await agent.get(`/groups/${user_id}`);
             return response.data;
         } catch (error) {

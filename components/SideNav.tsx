@@ -58,6 +58,16 @@ export default function SideNav() {
           }}
           item
         >
+          <Link href="/profile">Profile</Link>
+        </Grid>
+        <Grid
+          sx={{
+            margin: "20px 0",
+            display: "flex",
+            justifyContent: "left",
+          }}
+          item
+        >
           <Link href="/groups">Groups</Link>
         </Grid>
         <Grid

@@ -1,33 +1,33 @@
-import { Button, Grid, Typography } from '@mui/material'
-import { Container } from '@mui/system'
-import Link from 'next/link'
-import React, { useEffect } from 'react'
-import { getAllFields } from '../../features/fields/fieldSlice'
-import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { Button, Grid, Typography } from "@mui/material";
+import { Container } from "@mui/system";
+import Link from "next/link";
+import React, { useEffect } from "react";
+import DataCard from "../../components/DataCard";
+import { getAllFields } from "../../features/fields/fieldSlice";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 export default function index() {
-    const dispatch = useAppDispatch();
-    const { fields } = useAppSelector(state => state.field);
+  const dispatch = useAppDispatch();
+  const { fields } = useAppSelector((state) => state.field);
 
-    useEffect(() => {
-        dispatch(getAllFields())
-    }, [])
+  useEffect(() => {
+    dispatch(getAllFields());
+  }, []);
 
   return (
-    <Container sx={{marginTop: 10}}>
-        <Grid sx={{display: "flex", justifyContent: "flex-end"}}>
-            <Link href="/fields/createfield">
-                <Button variant="contained">Create Field</Button>
-            </Link>
+    <Container sx={{ marginTop: 10 }}>
+      <Typography sx={{ fontWeight: 600, marginBottom: 3 }} variant="h4">
+        Fields
+      </Typography>
+      {fields && (
+        <Grid sx={{ marginBottom: 3 }} container spacing={3}>
+          {fields?.map((field) => (
+            <Grid key={field.id} item xs={6} md={4} lg={3}>
+              <DataCard type="fields" data={field} color="#77ccaa" />
+            </Grid>
+          ))}
         </Grid>
-        <Typography sx={{fontWeight: 600}} variant="h4">Fields</Typography>
-        { fields ? (
-            fields?.map(field => (
-                <Typography key={field.id}>{field.name}</Typography>
-            ))) : (
-                <Typography>No Fields Created Yet</Typography>
-            )
-        }
+      )}
     </Container>
-  )
+  );
 }

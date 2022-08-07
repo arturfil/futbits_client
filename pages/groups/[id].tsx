@@ -24,9 +24,9 @@ export default function Group() {
           <Grid item xs={12}>
             <Typography variant="h4">{singleGroup?.name}</Typography>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{display: 'flex', justifyContent: "flex-end"}}>
             <Link href={`/groups/addmembers/${id}`}>
-              <Button variant="contained">Add Member To Group</Button>
+              <Button variant="contained" disableElevation sx={{borderRadius: 8}}>Add Member To Group</Button>
             </Link>
           </Grid>
           <Grid item xs={12}>
