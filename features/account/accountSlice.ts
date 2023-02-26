@@ -6,14 +6,14 @@ import { User } from "../../interfaces/User";
 interface AccountState {
     user: User | null;
     users: User[] | null;
-    loggedIn: boolean;
+    isLoggedIn: boolean;
     errors: Error[] | any;
 }
 
 const initialState: AccountState = {
     user: null,
     users: null,
-    loggedIn: false,
+    isLoggedIn: false,
     errors: []
 }
 
@@ -24,7 +24,19 @@ export const getUserByToken = createAsyncThunk<User>(
             const response = await agent.get("/users/bytoken");
             return response.data;
         } catch (error) {
-            thunkAPI.dispatch(setLogOut())
+            thunkAPI.dispatch(setLogIn(false))
+            return thunkAPI.rejectWithValue({error});
+        }
+    }
+)
+
+export const getUserById = createAsyncThunk<User, string>(
+    "account/getUserById",
+    async (id, thunkAPI) => {
+        try {
+            const response = await agent.get(`/users/user/${id}`);
+            return response.data;
+        } catch (error) {
             return thunkAPI.rejectWithValue({error});
         }
     }
@@ -45,10 +57,11 @@ export const loginUser = createAsyncThunk<User, any>(
     "account/loginUser",
     async (data, thunkAPI) => {
         try {
-            const response = await agent.post("/users/login", data);
+            const response = await agent.post("/auth/login", data);
             const { token } = response.data
             localStorage.setItem("jwt_gochi", JSON.stringify({token}))
             toast.success("Successfully Logged In")
+            thunkAPI.dispatch(setLogIn(true));
             return response.data.user;
         } catch (error:any) {
             toast.error("Wrong credentials");
@@ -69,6 +82,14 @@ export const signupUser = createAsyncThunk<User, User>(
             return thunkAPI.rejectWithValue({error: error.data});
         }
     }
+);
+
+export const logOut = createAsyncThunk<void>(
+    "account/logOut",
+    async (_, thunkAPI) => {
+        localStorage.removeItem(process.env.NEXT_PUBLIC_JWT!);
+        thunkAPI.dispatch(setLogIn(false));
+    }
 )
 
 export const accountSlice = createSlice({
@@ -76,20 +97,17 @@ export const accountSlice = createSlice({
     initialState,
     reducers: {
         setUser: (state, action) => {
-            state.loggedIn = true;
+            state.isLoggedIn = true;
             state.user = {...action.payload}
         },
-        setLoggedIn: (state) => {
-            state.loggedIn = true;
-        },
-        setLogOut: (state) => {
-            state.loggedIn = false;
+        setLogIn: (state, action) => {
+            state.isLoggedIn = action.payload;
         }
     },
     extraReducers: (builder) => {
         builder.addCase(loginUser.fulfilled, (state, action) => {
             state.user = action.payload
-            state.loggedIn = true;
+            state.isLoggedIn = true;
         });
         builder.addCase(getUserByToken.fulfilled, (state, action) => {
             state.user = action.payload;
@@ -100,5 +118,5 @@ export const accountSlice = createSlice({
     }
 });
 
-export const { setLoggedIn, setUser, setLogOut } = accountSlice.actions;
+export const { setLogIn, setUser } = accountSlice.actions;
 export default accountSlice.reducer;

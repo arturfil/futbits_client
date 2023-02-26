@@ -27,7 +27,7 @@ export default function index() {
   }, [user?.id]);
 
   return (
-    <Container sx={{ marginTop: 10 }}>
+    <Container sx={{ marginTop: 10, marginBottom: 10 }}>
       <Typography variant="h4" fontWeight={600}>
         Your Profile
       </Typography>

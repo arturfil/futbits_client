@@ -1,11 +1,11 @@
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
-import { setLoggedIn } from "../features/account/accountSlice";
+import { setLogIn } from "../features/account/accountSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 
 export default function AuthGuard({ children }: { children: JSX.Element }) {
   const dispatch = useAppDispatch();
-  const { loggedIn } = useAppSelector((state) => state.account);
+  const { isLoggedIn } = useAppSelector((state) => state.account);
   const router = useRouter();
 
   // const tkn = typeof window ? localStorage.getItem("jwt_gochi") : null;
@@ -26,9 +26,9 @@ export default function AuthGuard({ children }: { children: JSX.Element }) {
     }
     if (JSON.parse(tkn).token) {
       console.log("We good");
-        dispatch(setLoggedIn())
+        dispatch(setLogIn(true))
     }
   }
 
-  return loggedIn ? <>{children}</> : null;
+  return isLoggedIn ? <>{children}</> : null;
 }

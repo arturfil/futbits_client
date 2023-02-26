@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { getUserByToken, setLoggedIn, setLogOut } from "../features/account/accountSlice";
+import { getUserByToken, setLogIn } from "../features/account/accountSlice";
 import { useAppDispatch } from "../store/hooks";
 
 export default function RoutesWrapper({ children }: { children: JSX.Element }) {
@@ -10,7 +10,7 @@ export default function RoutesWrapper({ children }: { children: JSX.Element }) {
     if (!tkn) return;
     
     if (JSON.parse(tkn).token) {
-      dispatch(setLoggedIn());
+      dispatch(setLogIn(true));
       dispatch(getUserByToken());
     }
   }, []);

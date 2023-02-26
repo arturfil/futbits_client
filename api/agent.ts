@@ -4,8 +4,8 @@ interface JWT_DATA {
     token: string;
 }
 
-export const baseURL = process.env.REACT_APP_API_URL;
-export const jwt_string:string|undefined = process.env.REACT_APP_JWT_TOKEN
+export const baseURL = process.env.NEXT_PUBLIC_API_URL;
+export const jwt_string:string|undefined = process.env.NEXT_PUBLIC_JWT;
 
 const agent = axios.create({baseURL});
 

@@ -1,4 +1,5 @@
-import { Container, Grid, Typography } from "@mui/material";
+import { Button, Container, Grid, Typography } from "@mui/material";
+import Link from "next/link";
 import React, { useEffect } from "react";
 import DataCard from "../../components/DataCard";
 import { getAllGames } from "../../features/games/gameSlice";
@@ -18,7 +19,7 @@ export default function index() {
       <Typography sx={{ fontWeight: 600, marginBottom: 3 }} variant="h4">
         Soccer Games
       </Typography>
-      {games && (
+      {games ? (
         <Grid sx={{ marginBottom: 3 }} container spacing={3}>
           {games?.map((game) => (
             <Grid key={game.id} item xs={6} md={4} lg={3}>
@@ -26,9 +27,12 @@ export default function index() {
             </Grid>
           ))}
         </Grid>
+      ) : (
+        <Typography variant="h5" sx={{fontWeight: 'bold'}}>No Soccer Games to Display</Typography>
       )}
+      <Link  href="/games/createGame">
+        <Button className="button" sx={{mt: 2}}>Create Game</Button>
+      </Link>
     </Container>
   );
 }
-
-index.requiredAuth = true;

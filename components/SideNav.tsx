@@ -1,112 +1,113 @@
-import { Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, IconButton, Typography } from "@mui/material";
 import Link from "next/link";
 import React, { useState } from "react";
 
-import MenuIcon from "@mui/icons-material/Menu";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { setLogOut } from "../features/account/accountSlice";
+import { logOut, setLogIn } from "../features/account/accountSlice";
 
-export default function SideNav() {
+// import icons
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import GrassIcon from "@mui/icons-material/Grass";
+import GroupsIcon from "@mui/icons-material/Groups";
+import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
+import CreditCardIcon from "@mui/icons-material/CreditCard";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import LogoutIcon from "@mui/icons-material/Logout";
+import LoginIcon from "@mui/icons-material/Login";
+import CloseIcon from "@mui/icons-material/Close";
+import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import Item from "./Item";
+import { toast } from "react-toastify";
+
+interface Props {
+  display: boolean;
+  setDisplay: Function;
+}
+
+export default function SideNav({ display, setDisplay }: Props) {
+  const [name, setName] = useState("Home");
   const dispatch = useAppDispatch();
-  const { loggedIn } = useAppSelector(state => state.account);
-  const [display, setDisplay] = useState<boolean>(true);
+  const { isLoggedIn } = useAppSelector((state) => state.account);
 
-  const toggleMenu = () => setDisplay(!display);
-
-  const logOut = () => {
-    localStorage.removeItem("jwt_gochi");
-    dispatch(setLogOut());
-  };
-
-    return (
-    <Grid
-      item
-      xs={ display ? 6 : 0}
-      md={ display ? 2 : 0}
-      sx={{
-        py: 3,
-        px: 3,
-        display: {xs: 6, md: 2},
-        backgroundColor: "#0a0a0a",
-        backgroundImage: 'linear-gradient(135deg, #0b0433, #594e9b)',
-        minHeight: "100vh",
-        color: "white",
-        boxShadow: "0 2px 2px 2px lightgrey",
-        fontWeight: 600,
-      }}
-    >
-      <MenuIcon sx={{color: "white"}} onClick={toggleMenu} />
-      <Grid style={{ display: display ? "flex" : "none", margin: "0 auto" }} 
-        sx={{flexDirection: 'column'}}
-      >
-        <Grid
-          sx={{
-            display: 'flex',
-            margin: "20px 0",
-            justifyContent: "left",
-          }}
-          item
-        >
-          <Link href="/">Home</Link>
-        </Grid>
-        <Grid
-          sx={{
-            margin: "20px 0",
-            display: "flex",
-            justifyContent: "left",
-          }}
-          item
-        >
-          <Link href="/profile">Profile</Link>
-        </Grid>
-        <Grid
-          sx={{
-            margin: "20px 0",
-            display: "flex",
-            justifyContent: "left",
-          }}
-          item
-        >
-          <Link href="/groups">Groups</Link>
-        </Grid>
-        <Grid
-          sx={{
-            margin: "20px 0",
-            display: "flex",
-            justifyContent: "left",
-          }}
-          item
-        >
-          <Link href="/games">Games</Link>
-        </Grid>
-        <Grid
-          sx={{
-            margin: "20px 0",
-            display: "flex",
-            justifyContent: "left",
-          }}
-          item
-        >
-        { loggedIn ? (
-          <Grid onClick={logOut} sx={{ 
-            cursor: "pointer", 
-            display: "block",
-          }}>
-              <ExitToAppIcon />
-          </Grid>
-
-        ) : (
-          <Grid>
-            <Link href="/auth/login">
-              <Button className="red-button" variant="contained">Log In</Button>
-            </Link>
-          </Grid>  
-        )
-
-        }
-        </Grid>
-      </Grid>
-    </Grid>
+  return (
+    <>
+      <Box sx={{ backgroundImage: "linear-gradient(20deg, #517479, #293b5d)", height: "100%" }}>
+        <Box sx={{ display: "flex", justifyContent: "space-between", p: 3 }}>
+          {display && (
+            <Typography sx={{color: "white"}} variant="h5" fontWeight={"bold"}>
+              FutBit
+            </Typography>
+          )}
+          {!display ? (
+            <MenuOutlinedIcon
+              sx={{color: "white", cursor: "pointer" }}
+              onClick={() => setDisplay(!display)}
+            />
+          ) : (
+            <CloseIcon
+              sx={{ color: "white", cursor: "pointer" }}
+              onClick={() => setDisplay(!display)}
+            />
+          )}
+        </Box>
+        <Box sx={{ mx: display ? 5 : 2, mt: 2 }}>
+          <Item
+            display={display}
+            title="Home"
+            to="/"
+            icon={<HomeOutlinedIcon />}
+            selected={name}
+            setSelected={setName}
+          />
+          <Item
+            display={display}
+            title="Fields"
+            to="/fields"
+            icon={<GrassIcon />}
+            selected={name}
+            setSelected={setName}
+          />
+          <Item
+            display={display}
+            title="Profile"
+            to="/profile/adsfasd"
+            icon={<AccountCircleIcon />}
+            selected={name}
+            setSelected={setName}
+          />
+          <Item
+            display={display}
+            title="Groups"
+            to="/groups"
+            icon={<GroupsIcon />}
+            selected={name}
+            setSelected={setName}
+          />
+          <Item
+            display={display}
+            title="Games"
+            to="/games"
+            icon={<SportsSoccerIcon/>}
+            selected={name}
+            setSelected={setName}
+          />
+          {!isLoggedIn ? (
+            <Item
+              display={display}
+              title="Login"
+              to="/auth/login"
+              icon={<LoginIcon />}
+              selected={name}
+              setSelected={setName}
+            />
+          ) : (
+            <IconButton onClick={() => dispatch(logOut())} sx={{color: "lightgrey"}}>
+              <LogoutIcon />
+              <Typography sx={{ display: display ? "flex" : "none", mt: 0.5, ml: 2}}> Log Out</Typography>
+            </IconButton>
+          )}
+        </Box>
+      </Box>
+    </>
   );
 }

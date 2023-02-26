@@ -15,11 +15,10 @@ const initialState: ProfileState = {
     errors: []
 }
 
-export const getProfileFromUserId = createAsyncThunk<Profile, string>(
+export const getProfileFromUserId = createAsyncThunk<Profile, string | string[]>(
     "profile/getProfileFromUserId",
     async (user_id, thunkAPI) => {
         try {
-            console.log("AQUI", user_id);
             const response = await agent.get(`/profile/${user_id}`);
             return response.data;
         } catch (error) {

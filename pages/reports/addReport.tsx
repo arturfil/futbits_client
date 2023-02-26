@@ -1,8 +1,13 @@
 import { Button, Container, Grid, TextField, Typography } from "@mui/material";
 import { Report } from '../../interfaces/Report';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { createReport } from "../../features/reports/reportsSlice";
+import { toast } from "react-toastify";
 
 export default function addReport() {
+  const { user } = useAppSelector(state => state.account);
+  const dispatch = useAppDispatch();
   const [report, setReport] = useState<Report>({
     user_id: "",
     game_id: "",
@@ -11,8 +16,23 @@ export default function addReport() {
     attendance: 0,
     man_of_the_match: 0,
     attitude: "",
-    involvement: ""
-  })
+    involvement: 0
+  });
+
+  useEffect(() => {
+    if (!user?.id) return;
+    setReport({...report, user_id: user.id})
+  }, [user?.id])
+
+  function handleSubmit() {
+    for(let val of Object.values(report)) {
+      if ((typeof(val) === "string" && val === "") || (typeof(val) === "number" && val === 0)) {
+        toast.error("No field can be empty");
+        return;
+      }
+    }
+    dispatch(createReport(report));
+  }
 
   return (
     <Container sx={{ marginTop: 10 }}>
@@ -38,6 +58,7 @@ export default function addReport() {
         </Grid>
         <Grid item xs={4}>
           <TextField
+            type="number"
             value={report.assists}
             onChange={e => setReport({...report, assists: parseInt(e.target.value)})}
             fullWidth
@@ -46,13 +67,16 @@ export default function addReport() {
         </Grid>
         <Grid item xs={4}>
           <TextField
+            type="number"
             value={report.goals}
+            label="goals"
             onChange={e => setReport({...report, goals: parseInt(e.target.value)})}
             fullWidth
           />
         </Grid>
         <Grid item xs={4}>
           <TextField
+            type="number"
             value={report.attendance}
             onChange={e => setReport({...report, attendance: parseInt(e.target.value)})}
             fullWidth
@@ -61,7 +85,8 @@ export default function addReport() {
         </Grid>
         <Grid item xs={4}>
           <TextField
-          value={report.man_of_the_match}
+            type="number"
+            value={report.man_of_the_match}
             onChange={e => setReport({...report, man_of_the_match: parseInt(e.target.value)})}
             fullWidth
             label="man_of_the_match"
@@ -77,14 +102,15 @@ export default function addReport() {
         </Grid>
         <Grid item xs={4}>
           <TextField
+            type="number"
             value={report.involvement}
-            onChange={e => setReport({...report, involvement: e.target.value})}
+            onChange={e => setReport({...report, involvement: parseInt(e.target.value)})}
             fullWidth
             label="involvement"
           />
         </Grid>
         <Grid item xs={12}>
-          <Button fullWidth variant="contained" disableElevation>
+          <Button onClick={handleSubmit} fullWidth variant="contained" disableElevation>
             Create Report
           </Button>
         </Grid>

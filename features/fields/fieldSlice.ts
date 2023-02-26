@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import agent from "../../api/agent";
 import { Field } from "../../interfaces/Field";
 
@@ -24,7 +25,32 @@ export const getAllFields = createAsyncThunk<Field[]>(
             return thunkAPI.rejectWithValue({error})
         }
     }
-) 
+);
+
+export const getFieldById = createAsyncThunk<Field, string>(
+    "field/getFieldById",
+    async (id, thunkAPI) => {
+        try {
+            const response = await agent.get(`/fields/field/${id}`)
+            return response.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue({error});
+        }
+    }
+)
+
+export const createField = createAsyncThunk<Field, Field>(
+    "field/createField",
+    async (data, thunkAPI) => {
+        try {
+            const response = await agent.post("/fields/field", data);
+            toast.success("Successfuly Created Field");
+            return response.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue({error});
+        }
+    }
+)
 
 export const fieldSlice = createSlice({
     name: "field",
@@ -37,7 +63,10 @@ export const fieldSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getAllFields.fulfilled, (state, action) => {
             state.fields = action.payload;
-        })
+        });
+        builder.addCase(getFieldById.fulfilled, (state, action) => {
+            state.singleField = action.payload;
+        });
     }
 });
 

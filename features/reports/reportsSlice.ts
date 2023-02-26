@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import agent from "../../api/agent";
 import { Report } from "../../interfaces/Report";
 
@@ -14,7 +15,7 @@ const initialState: ReportState = {
     errors: []
 }
 
-export const getAllReportsOfUser = createAsyncThunk<Report[], string>(
+export const getAllReportsOfUser = createAsyncThunk<Report[], string | string[]>(
     "report/getAllReportsOfUser",
     async (user_id, thunkAPI) => {
         try {
@@ -30,9 +31,11 @@ export const createReport = createAsyncThunk<Report, Object>(
     "report/createReport",
     async (data, thunkAPI) => {
         try {
+            toast.success("Report was created successfully");
             const response = await agent.post("/reports/report", data);
             return response.data;
         } catch (error) {
+            toast.error("Something went wrong");
             return thunkAPI.rejectWithValue({error});
         }
     }

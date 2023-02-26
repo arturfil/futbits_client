@@ -9,8 +9,9 @@ import NavBar from '../components/NavBar'
 import AuthGuard from '../components/AuthGuard'
 import { NextPage } from 'next'
 import RoutesWrapper from '../components/RoutesWrapper'
-import { Grid } from '@mui/material'
+import { Box, Grid } from '@mui/material'
 import SideNav from '../components/SideNav'
+import { useMemo, useState } from 'react'
 
 export type NextApplicationPage<P = any, IP = P> = NextPage<P, IP> & {
   requiredAuth?: boolean
@@ -21,27 +22,33 @@ function MyApp(props: AppProps) {
     Component,
     pageProps,
   } : {Component: NextApplicationPage; pageProps: any} = props;
+  const [display, setDisplay] = useState<boolean>(true);
 
   return (
     <Provider store={store}>
       <RoutesWrapper {...pageProps}>
-        <Grid container>
-          <SideNav/>  
-          <Grid item xs={9}>
-            <NavBar/>
-            <Grid sx={{display:"flex", flexDirection: "column", margin: "0 auto"}} item xs={9}>
-              <ToastContainer theme="colored" position="bottom-right"/>
+        <ToastContainer theme="colored" position="bottom-right" />
+        <Box sx={{ display: "flex", flexDirection: "row", mb: "20px"}}>
+          <Box
+            className={!display ? "sidebar-seen sidebar" : "sidebar"}
+            sx={{ width: display ? "258px" : "70px", height: "100vh" }}
+          >
+            <SideNav display={display} setDisplay={setDisplay} />
+          </Box>
+          <Box
+            sx={{flex: "258px"}}>
+            <NavBar display={display} setDisplay={setDisplay} />
+            <>
               {Component.requiredAuth ? (
                 <AuthGuard>
                   <Component {...pageProps} />
                 </AuthGuard>
-              ): (
+              ) : (
                 <Component {...pageProps} />
               )}
-            </Grid>
-          </Grid>
-
-        </Grid>
+            </>
+          </Box>
+        </Box>
       </RoutesWrapper>
     </Provider>
   )

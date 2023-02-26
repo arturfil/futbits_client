@@ -19,7 +19,7 @@ export default function index() {
       <Typography sx={{ fontWeight: 600, marginBottom: 3 }} variant="h4">
         Fields
       </Typography>
-      {fields && (
+      {fields ? (
         <Grid sx={{ marginBottom: 3 }} container spacing={3}>
           {fields?.map((field) => (
             <Grid key={field.id} item xs={6} md={4} lg={3}>
@@ -27,7 +27,12 @@ export default function index() {
             </Grid>
           ))}
         </Grid>
+      ): (
+        <Typography sx={{color: "grey"}} variant="h4">No Fields Created yet</Typography>
       )}
+      <Link href="/fields/create">
+        <Button sx={{marginTop: 2}} className="button">Create Field</Button>
+      </Link>
     </Container>
   );
 }

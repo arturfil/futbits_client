@@ -45,6 +45,7 @@ export default function Group() {
                       <Typography variant="h6" 
                         fontSize={16} fontWeight={600}>Member Type</Typography>
                     </TableCell>
+                    <TableCell/>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -52,6 +53,11 @@ export default function Group() {
                     <TableRow key={mem.id}>
                       <TableCell>{mem.first_name} {mem.last_name}</TableCell>
                       <TableCell>{mem.member_type }</TableCell>
+                      <TableCell>
+                        <Link href={`/profile/${mem.id}`}>
+                          <Button variant="contained" disableElevation>View Player</Button>
+                        </Link>
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

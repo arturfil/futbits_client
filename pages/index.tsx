@@ -36,7 +36,7 @@ const Home: NextPage = () => {
         <Grid sx={{ marginBottom: 3 }} container spacing={3}>
           {fields?.map((field) => (
             <Grid key={field.id} item xs={6}>
-              <DataCard data={field} color="#1a82af"/>
+              <DataCard type="fields" data={field} color="#1a82af"/>
             </Grid>
           ))}
         </Grid>
@@ -55,7 +55,7 @@ const Home: NextPage = () => {
       ): (
         <Typography color="red">No Games Yet</Typography>
       )}
-      <Typography variant="h6">Groups</Typography>
+      <Typography variant="h6">Groups You Belong To</Typography>
       {groups ? (
         <Grid container spacing={3}>
           {groups?.map((group) => (
@@ -65,7 +65,7 @@ const Home: NextPage = () => {
           ))}
         </Grid>
       ) : (
-        <Typography color="red">No Groups Created Yet</Typography>
+        <Typography color="red">Need To Sign In To See Your Groups</Typography>
       )}
     </Container>
   );

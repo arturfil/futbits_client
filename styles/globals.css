@@ -15,10 +15,18 @@ a {
   box-sizing: border-box;
 }
 
-.red-button {
-  background-image: linear-gradient(90deg, rgb(94, 83, 193), rgb(12, 93, 216));
-  border-radius: 20px;
-  text-transform: capitalize;
+.button {
+  background-image: linear-gradient(90deg, #1bcab6 ,#1bca98);
+  border-radius: 10px!important;
+  text-transform: capitalize!important;
+  color: white!important;
+}
+
+.delete-button {
+  background-image: linear-gradient(90deg, rgb(218, 75, 75) ,rgb(186, 24, 236));
+  border-radius: 10px!important;
+  text-transform: capitalize!important;
+  color: white!important;
 }
 
 .nav-link {
