@@ -27,7 +27,7 @@ interface Props {
 export default function SideNav({ display, setDisplay }: Props) {
   const [name, setName] = useState("Home");
   const dispatch = useAppDispatch();
-  const { isLoggedIn } = useAppSelector((state) => state.account);
+  const { isLoggedIn, user } = useAppSelector((state) => state.account);
 
   return (
     <>
@@ -70,7 +70,7 @@ export default function SideNav({ display, setDisplay }: Props) {
           <Item
             display={display}
             title="Profile"
-            to="/profile/adsfasd"
+            to={`/profile/${user?.id}`}
             icon={<AccountCircleIcon />}
             selected={name}
             setSelected={setName}

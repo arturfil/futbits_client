@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import agent from "../../api/agent";
 import { Game } from "../../interfaces/Game";
 
@@ -22,6 +23,19 @@ export const getAllGames = createAsyncThunk<Game[]>(
             return response.data.games;
         } catch (error) {
             return thunkAPI.rejectWithValue({error})
+        }
+    }
+)
+
+export const createGame = createAsyncThunk<Game, Game>(
+    "game/createGame",
+    async (data, thunkAPI) => {
+        try {
+            toast.success("Successfully created game!")
+            const response = await agent.post("/games/game", data);
+            return response.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue({error});
         }
     }
 )

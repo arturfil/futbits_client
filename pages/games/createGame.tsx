@@ -1,23 +1,27 @@
-import { Input, Select, Option } from "@mui/joy";
+import { Input, Select, Option, Button } from "@mui/joy";
 import { Container, Grid, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, MouseEvent } from "react";
 import { Game } from "../../interfaces/Game";
-import { getAllGames } from '../../features/games/gameSlice';
+import { createGame, getAllGames } from '../../features/games/gameSlice';
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { getAllFields } from "../../features/fields/fieldSlice";
 
-export default function createGame() {
+export default function CreateGamePage() {
   const { fields } = useAppSelector((state) => state.field);
   const dispatch = useAppDispatch();
   const [game, setGame] = useState<Game>({
     field_id: "",
-    field_name: "",
     start_time: "",
   });
 
   useEffect(() => { 
     dispatch(getAllFields())
   }, [])
+
+  function handleSubmit(e: MouseEvent<HTMLButtonElement|any>) {
+    e.preventDefault();
+    dispatch(createGame(game));
+  }
 
   return (
     <Container
@@ -46,7 +50,7 @@ export default function createGame() {
             }}>
             <option value="">Default</option>
             {fields && fields.map(field => (
-              <option value="three">{field.name}</option>
+              <option key={field.id} value="three">{field.name}</option>
             ))}
           </select>
           <Input placeholder="Start Time" 
@@ -58,9 +62,14 @@ export default function createGame() {
             }}
           />
         </Grid>
+        <Grid item xs={12}>
+            <Button onClick={(e) => handleSubmit(e)} fullWidth className="button">
+              Create Game
+            </Button>
+          </Grid>
       </Grid>
     </Container>
   );
 }
 
-createGame.requiredAuth = true;
+CreateGamePage.requiredAuth = true;
