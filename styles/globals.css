@@ -37,3 +37,23 @@ a {
 :root {
   custom-color: #594e9b
 }
+
+.menu {
+  display: none;
+}
+
+@media (max-width: 428px) {
+  .menu {
+    display: flex;
+  }
+
+  .sidebar-seen {
+    display: none;
+  }
+
+  .sidebar {
+    position: absolute;
+    z-index: 1;
+    background-color: #fafafa;
+  }
+}
