@@ -14,7 +14,7 @@ export default function DataCard({ data, color, type }: Props) {
       <Paper
         elevation={1}
         sx={{
-          cursor: 'pointer',
+          cursor: "pointer",
           height: 140,
           borderRadius: 2,
           backgroundColor: color,
@@ -33,7 +33,9 @@ export default function DataCard({ data, color, type }: Props) {
           {data.start_time && (
             <Grid item xs={12}>
               <Typography color="white" fontWeight={600}>
-                {new Date(data.start_time).toLocaleDateString()}
+                {data.game_date.split("T")[0].split("-").reverse().join("/")}
+                <br />
+                {new Date() > new Date(data.game_date) ? "[Finished] " : ""}
               </Typography>
             </Grid>
           )}

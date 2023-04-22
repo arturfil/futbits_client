@@ -6,12 +6,21 @@ import { createGame, getAllGames } from '../../features/games/gameSlice';
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { getAllFields } from "../../features/fields/fieldSlice";
 
+interface GameInput {
+    field_id: string,
+    start_time: string,
+    game_date: string,
+    max_players: string
+}
+
 export default function CreateGamePage() {
   const { fields } = useAppSelector((state) => state.field);
   const dispatch = useAppDispatch();
-  const [game, setGame] = useState<Game>({
+  const [game, setGame] = useState<GameInput>({
     field_id: "",
     start_time: "",
+    game_date: "",
+    max_players: ""
   });
 
   useEffect(() => { 
@@ -20,7 +29,10 @@ export default function CreateGamePage() {
 
   function handleSubmit(e: MouseEvent<HTMLButtonElement|any>) {
     e.preventDefault();
-    dispatch(createGame(game));
+    let gameToCreate:Game|any = game;
+    gameToCreate.max_players = parseInt(game.max_players);
+    gameToCreate.game_date = new Date(game.game_date).toISOString();
+    dispatch(createGame(gameToCreate));
   }
 
   return (
@@ -36,6 +48,7 @@ export default function CreateGamePage() {
       <Grid container>
         <Grid item sx={{ mt: 2, mb: 3}}>
           <select 
+            onChange={e => setGame({...game, field_id: e.target.value})}
             style={{
               borderColor: "lightgrey",
               backgroundColor: "white",
@@ -48,19 +61,49 @@ export default function CreateGamePage() {
               borderRadius: 7,
               border: "1px none black"
             }}>
-            <option value="">Default</option>
+            <option value="">Choose Field</option>
             {fields && fields.map(field => (
-              <option key={field.id} value="three">{field.name}</option>
+              <option key={field.id} value={field.id}>{field.name}</option>
             ))}
           </select>
           <Input placeholder="Start Time" 
+            value={game.start_time}
+            onChange={e => setGame({...game, start_time: e.target.value})}
             sx={{
               minWidth: "450px",
               fontSize: "15px",
               height: '40px',
-              backgroundColor: "white", border: "none"
+              mb: "10px",
+              backgroundColor: "white", 
+              border: "none"
             }}
           />
+          <Input placeholder="Date"
+            onChange={e => setGame({...game, game_date: String(e.target.value)})}
+            value={game.game_date}
+            type="date"
+            sx={{
+              minWidth: "450px",
+              fontSize: "15px",
+              height: '40px',
+              mb: "10px",
+              backgroundColor: "white", 
+              border: "none"
+            }}
+          />
+          <Input placeholder="Max players"
+            type="text"
+            onChange={e => setGame({...game, max_players: Number(e.target.value)})}
+            value={game.max_players}
+            sx={{
+              minWidth: "450px",
+              fontSize: "15px",
+              height: '40px',
+              backgroundColor: "white", 
+              border: "none"
+            }}
+          />
+
         </Grid>
         <Grid item xs={12}>
             <Button onClick={(e) => handleSubmit(e)} fullWidth className="button">

@@ -9,7 +9,7 @@ import { logOut, setLogIn } from "../features/account/accountSlice";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import GrassIcon from "@mui/icons-material/Grass";
 import GroupsIcon from "@mui/icons-material/Groups";
-import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
+import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -31,16 +31,26 @@ export default function SideNav({ display, setDisplay }: Props) {
 
   return (
     <>
-      <Box sx={{ backgroundImage: "linear-gradient(20deg, #517479, #293b5d)", height: "100%" }}>
+      <Box
+        sx={{
+          position: "fixed",
+          backgroundImage: "linear-gradient(20deg, #517479, #293b5d)",
+          height: "100vh",
+        }}
+      >
         <Box sx={{ display: "flex", justifyContent: "space-between", p: 3 }}>
           {display && (
-            <Typography sx={{color: "white"}} variant="h5" fontWeight={"bold"}>
+            <Typography
+              sx={{ color: "white" }}
+              variant="h5"
+              fontWeight={"bold"}
+            >
               FutBit
             </Typography>
           )}
           {!display ? (
             <MenuOutlinedIcon
-              sx={{color: "white", cursor: "pointer" }}
+              sx={{ color: "white", cursor: "pointer" }}
               onClick={() => setDisplay(!display)}
             />
           ) : (
@@ -87,7 +97,7 @@ export default function SideNav({ display, setDisplay }: Props) {
             display={display}
             title="Games"
             to="/games"
-            icon={<SportsSoccerIcon/>}
+            icon={<SportsSoccerIcon />}
             selected={name}
             setSelected={setName}
           />
@@ -101,9 +111,17 @@ export default function SideNav({ display, setDisplay }: Props) {
               setSelected={setName}
             />
           ) : (
-            <IconButton onClick={() => dispatch(logOut())} sx={{color: "lightgrey"}}>
+            <IconButton
+              onClick={() => dispatch(logOut())}
+              sx={{ color: "lightgrey" }}
+            >
               <LogoutIcon />
-              <Typography sx={{ display: display ? "flex" : "none", mt: 0.5, ml: 2}}> Log Out</Typography>
+              <Typography
+                sx={{ display: display ? "flex" : "none", mt: 0.5, ml: 2 }}
+              >
+                {" "}
+                Log Out
+              </Typography>
             </IconButton>
           )}
         </Box>

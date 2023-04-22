@@ -7,12 +7,14 @@ interface GameState {
     games: Game[] | null;
     singleGame: Game | null;
     errors: Error[] | any;
+    loading: Boolean;
 }
 
 const initialState: GameState = {
     games: null,
     singleGame: null,
-    errors: []
+    errors: [],
+    loading: false
 }
 
 export const getAllGames = createAsyncThunk<Game[]>(
@@ -27,18 +29,32 @@ export const getAllGames = createAsyncThunk<Game[]>(
     }
 )
 
-export const createGame = createAsyncThunk<Game, Game>(
-    "game/createGame",
-    async (data, thunkAPI) => {
+export const getSingleGame = createAsyncThunk<Game, string | string[]>(
+    "game/getSingleGame",
+    async (id, thunkAPI) => {
         try {
-            toast.success("Successfully created game!")
-            const response = await agent.post("/games/game", data);
+            const response = await agent.get(`/games/game/${id}`);
             return response.data;
         } catch (error) {
             return thunkAPI.rejectWithValue({error});
         }
     }
 )
+
+export const createGame = createAsyncThunk<Game, Game>(
+    "game/createGame",
+    async (data, thunkAPI) => {
+        try {
+            toast.success("Successfully created game!")
+            const response = await agent.post("/games/game", data);
+            thunkAPI.dispatch(getAllGames());
+            return response.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue({error});
+        }
+    }
+)
+
 
 export const gameSlice = createSlice({
     name: "game",
@@ -52,6 +68,13 @@ export const gameSlice = createSlice({
         builder.addCase(getAllGames.fulfilled, (state, action) => {
             state.games = action.payload;
         });
+        builder.addCase(getSingleGame.pending, (state, action) => {
+            state.loading = true;
+        })
+        builder.addCase(getSingleGame.fulfilled, (state, action) => {
+            state.loading = false;
+            state.singleGame = action.payload;
+        })
     }
 });
 

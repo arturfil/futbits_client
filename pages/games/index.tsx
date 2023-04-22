@@ -12,7 +12,7 @@ export default function index() {
   useEffect(() => {
     if (games) return;
     dispatch(getAllGames());
-  }, [])
+  }, [games, dispatch])
 
   return (
     <Container sx={{ marginTop: 10 }}>
@@ -23,7 +23,7 @@ export default function index() {
         <Grid sx={{ marginBottom: 3 }} container spacing={3}>
           {games?.map((game) => (
             <Grid key={game.id} item xs={6} md={4} lg={3}>
-              <DataCard type="games" data={game} color="#ffccaa" />
+              <DataCard type="games" data={game} color="#27baa2" />
             </Grid>
           ))}
         </Grid>

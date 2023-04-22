@@ -28,24 +28,11 @@ export default function NavBar({ display, setDisplay }: Props) {
       className="topbar"
       sx={{ display: "flex", justifyContent: "start", padding: 2 }}
     >
-      {/* <Box sx={{display:"flex", }}> */}
       <MenuOutlinedIcon
         sx={{ color: "#6d6d6d" }}
         className="menu"
         onClick={() => setDisplay(!display)}
       />
-      {/* <IconButton>
-        </IconButton>
-        <IconButton>
-          <NotificationsOutlineIcon/>
-        </IconButton>
-        <IconButton>
-          <SettingsOutlineIcon/>
-        </IconButton>
-        <IconButton>
-          <PersonOutlineIcon/>
-        </IconButton>
-      </Box> */}
     </Box>
   );
 }

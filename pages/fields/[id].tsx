@@ -17,9 +17,10 @@ export default function FieldDetails() {
     dispatch(getFieldById(id));
   }, [id]);
 
-  return (<Container>
-    <Typography variant="h2" sx={{fontWeight: "bold"}}>{ singleField?.name } </Typography>
-    <Typography variant="h4" sx={{color: "grey"}}>{ singleField?.address } </Typography>
-    {singleField?.image ?  <Image src={singleField?.image}/> : "No Image Yet"}
-  </Container>);
+  return (
+      <Container sx={{ marginTop: 10, paddingBottom: 5 }} maxWidth="lg">
+        <Typography variant="h2" sx={{fontWeight: "bold"}}>{ singleField?.name } </Typography>
+        <Typography variant="h4" sx={{color: "grey"}}>{ singleField?.address } </Typography>
+        {singleField?.image ?  <Image src={singleField?.image}/> : "No Image Yet"}
+      </Container>);
 }

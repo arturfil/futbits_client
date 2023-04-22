@@ -32,7 +32,7 @@ import { useRouter } from "next/router";
     return (
       <Container sx={{ marginTop: 10, marginBottom: 10 }}>
         <Typography variant="h4" fontWeight={600}>
-          Your Profile
+          {profile ? "Your Profile" : "Your Profile Is Not Set Yet"}
         </Typography>
   
         <Grid container component={Paper} sx={{ padding: 2, marginTop: 5, marginBottom: 5 }}>
@@ -77,15 +77,24 @@ import { useRouter } from "next/router";
           </Grid>
         </Grid>
   
-        <Grid container>
-          <Typography variant="h5" fontWeight={600}>Reports</Typography>
-        </Grid>      
-  
-        <Grid container sx={{display: 'flex', justifyContent: "flex-end"}}>
-          <Link href="/reports/addReport">
-            <Button variant="contained" disableElevation sx={{borderRadius: 8}}>Create Report</Button>
-          </Link>
-        </Grid>
+        <Grid container rowSpacing={2}>
+            <Grid item xs={6} spacing={2} sx={{}}>
+              <Typography variant="h5" fontWeight={600}>Profile</Typography>
+            </Grid>
+            <Grid item xs={6} sx={{display: "flex", justifyContent: "flex-end"}}>
+              <Link href={`/profile/edit/${user?.id}`}>
+                  <Button variant="contained" disableElevation sx={{borderRadius: 2}}>{profile ? "Edit Profile" : "Start Profile"}</Button>
+              </Link>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography variant="h5" fontWeight={600}>Reports</Typography>
+            </Grid>
+            <Grid item xs={6} sx={{display: "flex", justifyContent: "flex-end"}}>
+              <Link href="/reports/addReport">
+                  <Button variant="contained" disableElevation sx={{borderRadius: 2}}>Create Report</Button>
+              </Link>
+            </Grid>
+       </Grid>      
   
         <Grid container sx={{marginTop: 2}}> 
           { reports && reports.map(r => (
