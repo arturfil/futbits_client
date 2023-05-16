@@ -18,7 +18,12 @@ export default function SingleGame()  {
     return (
       <Container sx={{ marginTop: 10, paddingBottom: 5 }} maxWidth="lg">
         <Typography variant="h2" sx={{fontWeight: "bold"}}>{ singleGame?.field_name } </Typography>
-        <Typography variant="h4" sx={{fontWeight: "bold"}}>{ singleGame?.game_date.split("T")[0].split("-").reverse().join("/") } at {singleGame?.start_time}</Typography>
+        <Typography variant="h4" 
+            sx={{fontWeight: "bold"}}>
+            { singleGame?.game_date.toString().split("T")[0].split("-").reverse().join("/") } 
+            {" "} at {" "}
+            {new Date(singleGame?.game_date).toLocaleTimeString()}
+        </Typography>
         <Typography variant="h5">Max Players: {singleGame?.max_players}</Typography>
       </Container>);
 }

@@ -6,7 +6,7 @@ import DataCard from "../../components/DataCard";
 import { getAllGroupOfAUser, getAllGroups } from "../../features/groups/groupSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
-export default function index() {
+export default function Groups() {
   const dispatch = useAppDispatch();
   const { groups } = useAppSelector((state) => state.groups);
   const { user, isLoggedIn } = useAppSelector((state) => state.account);

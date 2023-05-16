@@ -4,7 +4,7 @@ import React, { useState, MouseEvent } from 'react'
 import { setUser, signupUser } from '../../features/account/accountSlice'
 import { useAppDispatch } from '../../store/hooks'
 
-export default function signup() {
+export default function Signup() {
   const dispatch = useAppDispatch();
   const [user, setUser] = useState({
     email: "",

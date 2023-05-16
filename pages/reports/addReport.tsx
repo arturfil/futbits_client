@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { createReport } from "../../features/reports/reportsSlice";
 import { toast } from "react-toastify";
 
-export default function addReport() {
+export default function AddReport() {
   const { user } = useAppSelector(state => state.account);
   const dispatch = useAppDispatch();
   const [report, setReport] = useState<Report>({

@@ -83,7 +83,7 @@ export const groupSlice = createSlice({
         builder.addCase(getAllGroupOfAUser.fulfilled, (state, action) => {
             state.groups = action.payload;
         });
-    }
+   }
 });
 
 export const { setSingleGroup } = groupSlice.actions;

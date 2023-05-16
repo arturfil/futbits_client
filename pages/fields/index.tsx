@@ -6,7 +6,7 @@ import DataCard from "../../components/DataCard";
 import { getAllFields } from "../../features/fields/fieldSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
-export default function index() {
+export default function Fields() {
   const dispatch = useAppDispatch();
   const { fields } = useAppSelector((state) => state.field);
 

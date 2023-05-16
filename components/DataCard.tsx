@@ -30,10 +30,12 @@ export default function DataCard({ data, color, type }: Props) {
               {data.field_name ? data.field_name : data.name}
             </Typography>
           </Grid>
-          {data.start_time && (
+          {data.game_date && (
             <Grid item xs={12}>
               <Typography color="white" fontWeight={600}>
                 {data.game_date.split("T")[0].split("-").reverse().join("/")}
+                <br/>
+                {new Date(data?.game_date).toLocaleTimeString()}
                 <br />
                 {new Date() > new Date(data.game_date) ? "[Finished] " : ""}
               </Typography>

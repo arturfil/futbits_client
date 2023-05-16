@@ -14,7 +14,7 @@ import { getProfileFromUserId } from "../../features/profile/profileSlice";
 import { getAllReportsOfUser } from "../../features/reports/reportsSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
-export default function index() {
+export default function Profile() {
   const { profile } = useAppSelector((state) => state.profile);
   const { reports } = useAppSelector((state) => state.report);
   const { user } = useAppSelector((state) => state.account);

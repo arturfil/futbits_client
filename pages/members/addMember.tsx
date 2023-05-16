@@ -1,7 +1,7 @@
 import { Button, Container, Grid, TextField, Typography } from '@mui/material'
 import React from 'react'
 
-export default function addMember() {
+export default function AddMember() {
   return (
     <Container sx={{marginTop: 10}}>
       <Grid container>

@@ -27,6 +27,18 @@ export const getProfileFromUserId = createAsyncThunk<Profile, string | string[]>
     }
 );
 
+export const createProfile = createAsyncThunk<Profile, Profile>(
+    "profile/createProfile",
+    async (data, thunkAPI) => {
+        try {
+            const response = await agent.post("/profile/create", data);
+            return response.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue({error});
+        }
+    }
+)
+
 export const profileSlice = createSlice({
     name: "profile",
     initialState,

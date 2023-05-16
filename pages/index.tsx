@@ -35,7 +35,7 @@ const Home: NextPage = () => {
       { fields ? (
         <Grid sx={{ marginBottom: 3 }} container spacing={3}>
           {fields?.map((field) => (
-            <Grid key={field.id} item xs={6}>
+            <Grid key={field.id} item xs={6} md={4} lg={3}>
               <DataCard type="fields" data={field} color="#1a82af"/>
             </Grid>
           ))}

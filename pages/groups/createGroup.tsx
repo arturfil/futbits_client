@@ -4,7 +4,7 @@ import { createNewGroup } from "../../features/groups/groupSlice";
 import { createMember } from "../../features/members/memberSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
-export default function createGroup() {
+export default function CreateGroup() {
   const { user } = useAppSelector(state => state.account)
   const dispatch = useAppDispatch();
   const [name, setName] = useState<string>("");

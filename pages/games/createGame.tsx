@@ -8,7 +8,6 @@ import { getAllFields } from "../../features/fields/fieldSlice";
 
 interface GameInput {
     field_id: string,
-    start_time: string,
     game_date: string,
     max_players: string
 }
@@ -18,14 +17,13 @@ export default function CreateGamePage() {
   const dispatch = useAppDispatch();
   const [game, setGame] = useState<GameInput>({
     field_id: "",
-    start_time: "",
     game_date: "",
     max_players: ""
   });
 
   useEffect(() => { 
     dispatch(getAllFields())
-  }, [])
+  }, [dispatch])
 
   function handleSubmit(e: MouseEvent<HTMLButtonElement|any>) {
     e.preventDefault();
@@ -66,22 +64,13 @@ export default function CreateGamePage() {
               <option key={field.id} value={field.id}>{field.name}</option>
             ))}
           </select>
-          <Input placeholder="Start Time" 
-            value={game.start_time}
-            onChange={e => setGame({...game, start_time: e.target.value})}
-            sx={{
-              minWidth: "450px",
-              fontSize: "15px",
-              height: '40px',
-              mb: "10px",
-              backgroundColor: "white", 
-              border: "none"
+         <Input placeholder="Date"
+            onChange={e => {
+                setGame({...game, game_date: String(e.target.value)})
+                console.log(game.game_date);
             }}
-          />
-          <Input placeholder="Date"
-            onChange={e => setGame({...game, game_date: String(e.target.value)})}
             value={game.game_date}
-            type="date"
+            type="datetime-local"
             sx={{
               minWidth: "450px",
               fontSize: "15px",
@@ -93,7 +82,7 @@ export default function CreateGamePage() {
           />
           <Input placeholder="Max players"
             type="text"
-            onChange={e => setGame({...game, max_players: Number(e.target.value)})}
+            onChange={e => setGame({...game, max_players: e.target.value})}
             value={game.max_players}
             sx={{
               minWidth: "450px",

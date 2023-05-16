@@ -26,7 +26,7 @@ import CustomSelector from "../../../components/CustomSelector";
 import { Member } from "../../../interfaces/Member";
 import { createMember } from "../../../features/members/memberSlice";
 
-export default function addMember() {
+export default function AddMember() {
   const router = useRouter();
   const id = router.query["id"];
   const [term, setTerm] = useState<string>("");

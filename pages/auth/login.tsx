@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { loginUser } from "../../features/account/accountSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
-export default function login() {
+export default function Login() {
   const dispatch = useAppDispatch();
   const {isLoggedIn, errors} = useAppSelector(state => state.account);
   const router = useRouter();
