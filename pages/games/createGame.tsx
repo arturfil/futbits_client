@@ -42,6 +42,8 @@ export default function CreateGamePage() {
     >
       <Typography variant="h4" sx={{ fontWeight: "bold", mt: 2}}>
         Create Game
+
+
       </Typography>
       <Grid container>
         <Grid item sx={{ mt: 2, mb: 3}}>

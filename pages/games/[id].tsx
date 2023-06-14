@@ -22,7 +22,7 @@ export default function SingleGame()  {
             sx={{fontWeight: "bold"}}>
             { singleGame?.game_date.toString().split("T")[0].split("-").reverse().join("/") } 
             {" "} at {" "}
-            {new Date(singleGame?.game_date).toLocaleTimeString()}
+            {singleGame ? new Date(singleGame.game_date).toLocaleTimeString() : null}
         </Typography>
         <Typography variant="h5">Max Players: {singleGame?.max_players}</Typography>
       </Container>);

@@ -1,12 +1,15 @@
-import { Button, Container, Grid, TextField, Typography } from "@mui/material";
-import { Report } from '../../interfaces/Report';
+import { Button, Container, Grid, Typography } from "@mui/material";
+import { Report } from "../../interfaces/Report";
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { createReport } from "../../features/reports/reportsSlice";
 import { toast } from "react-toastify";
+import { Input } from "@mui/joy";
+import { Label } from "@mui/icons-material";
 
 export default function AddReport() {
-  const { user } = useAppSelector(state => state.account);
+  const { user } = useAppSelector((state) => state.account);
+  const { games } = useAppSelector((state) => state.games);
   const dispatch = useAppDispatch();
   const [report, setReport] = useState<Report>({
     user_id: "",
@@ -16,17 +19,20 @@ export default function AddReport() {
     attendance: 0,
     man_of_the_match: 0,
     attitude: "",
-    involvement: 0
+    involvement: 0,
   });
 
   useEffect(() => {
     if (!user?.id) return;
-    setReport({...report, user_id: user.id})
-  }, [user?.id])
+    setReport({ ...report, user_id: user.id });
+  }, [user?.id]);
 
   function handleSubmit() {
-    for(let val of Object.values(report)) {
-      if ((typeof(val) === "string" && val === "") || (typeof(val) === "number" && val === 0)) {
+    for (let val of Object.values(report)) {
+      if (
+        (typeof val === "string" && val === "") ||
+        (typeof val === "number" && val === 0)
+      ) {
         toast.error("No field can be empty");
         return;
       }
@@ -35,86 +41,140 @@ export default function AddReport() {
   }
 
   return (
-    <Container sx={{ marginTop: 10 }}>
+    <div className="login-body" style={{ marginTop: 10 }}>
       <Typography sx={{ marginBottom: 2 }} variant="h4" fontWeight={600}>
         Add Report
       </Typography>
-      <Grid container spacing={3}>
+    
+    <Container>
+
+
+      <Grid className="login-container" container spacing={3}
+        sx={{
+          backgroundColor: "lightgrey",
+          pr: 10,
+          pl: 7,
+          py: 5,
+          borderRadius: 2,
+          m: "0 auto",
+        }}
+      >
         <Grid item xs={6}>
-          <TextField
+          <label>User ID</label>
+          <Input
+            type="text"
             onChange={(e) => setReport({ ...report, user_id: e.target.value })}
             value={report.user_id}
-            fullWidth
-            label="user_id"
+            placeholder="user_id"
           />
         </Grid>
-        <Grid item xs={6}>
-          <TextField
+        <Grid item xs={6} sx={{display: "flex", flexDirection: "column"}}>
+          <label>Game ID</label>
+          <select
             onChange={(e) => setReport({ ...report, game_id: e.target.value })}
-            value={report.game_id}
-            fullWidth
-            label="game_id"
-          />
+            style={{
+              borderColor: "lightgrey",
+              backgroundColor: "white",
+              minWidth: "450px",
+              minHeight: "40px",
+              fontSize: "15px",
+              color: "grey",
+              marginBottom: "10px",
+              paddingLeft: "10px",
+              borderRadius: 7,
+              border: "1px solid black",
+            }}
+          >
+            <>
+              <option value="">Choose Game</option>
+              {games &&
+                games.map((game) => (
+                  <option key={game.id} value={game.id}>
+                    {game.field_name} - {game.game_date.split("T")[0].split("-").reverse().join("/")}
+                  </option>
+                ))}
+            </>
+          </select>
         </Grid>
         <Grid item xs={4}>
-          <TextField
+          <label>Assists</label>
+          <Input
             type="number"
             value={report.assists}
-            onChange={e => setReport({...report, assists: parseInt(e.target.value)})}
+            onChange={(e) =>
+              setReport({ ...report, assists: parseInt(e.target.value) })
+            }
             fullWidth
-            label="assists"
+            placeholder="assists"
           />
         </Grid>
         <Grid item xs={4}>
-          <TextField
+          <label>Goals</label>
+          <Input
             type="number"
             value={report.goals}
-            label="goals"
-            onChange={e => setReport({...report, goals: parseInt(e.target.value)})}
+            placeholder="goals"
+            onChange={(e) =>
+              setReport({ ...report, goals: parseInt(e.target.value) })
+            }
             fullWidth
           />
         </Grid>
         <Grid item xs={4}>
-          <TextField
+          <label>Attendance</label>
+          <Input
             type="number"
             value={report.attendance}
-            onChange={e => setReport({...report, attendance: parseInt(e.target.value)})}
+            onChange={(e) =>
+              setReport({ ...report, attendance: parseInt(e.target.value) })
+            }
             fullWidth
-            label="attendance"
+            placeholder="attendance"
           />
         </Grid>
         <Grid item xs={4}>
-          <TextField
+          <label>Man Of The Match</label>
+          <Input
             type="number"
             value={report.man_of_the_match}
-            onChange={e => setReport({...report, man_of_the_match: parseInt(e.target.value)})}
+            onChange={(e) =>
+              setReport({
+                ...report,
+                man_of_the_match: parseInt(e.target.value),
+              })
+            }
             fullWidth
-            label="man_of_the_match"
+            placeholder="man_of_the_match"
           />
         </Grid>
         <Grid item xs={4}>
-          <TextField
+          <label>Attitude</label>
+          <Input
             onChange={(e) => setReport({ ...report, attitude: e.target.value })}
             value={report.attitude}
             fullWidth
-            label="attitude"
+            placeholder="attitude"
           />
         </Grid>
         <Grid item xs={4}>
-          <TextField
+          <label>Involvement</label>
+          <Input
             type="number"
             value={report.involvement}
-            onChange={e => setReport({...report, involvement: parseInt(e.target.value)})}
+            onChange={(e) =>
+              setReport({ ...report, involvement: parseInt(e.target.value) })
+            }
             fullWidth
-            label="involvement"
+            placeholder="involvement"
           />
         </Grid>
         <Grid item xs={12}>
-          <Button onClick={handleSubmit} fullWidth variant="contained" disableElevation>
+          <Button onClick={handleSubmit} fullWidth className="button">
             Create Report
           </Button>
         </Grid>
       </Grid>
     </Container>
+    </div>
   );
 }

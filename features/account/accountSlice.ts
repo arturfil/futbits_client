@@ -74,7 +74,7 @@ export const signupUser = createAsyncThunk<User, User>(
     "account/signupUser",
     async (data, thunkAPI) => {
         try {
-            const response = await agent.post("/users/signup", data);
+            const response = await agent.post("/auth/signup", data);
             toast.success("Successfully Signed Up")
             return response.data;
         } catch (error:any) {

@@ -15,7 +15,7 @@ export default function Games() {
   }, [games, dispatch])
 
   return ( 
-    <Container style={{ marginTop: 10 }}>
+    <Container sx={{ marginTop: 10 }}>
       <Typography style={{ fontWeight: 600, marginBottom: 3 }} variant="h4">
         Soccer Games
       </Typography>

@@ -37,7 +37,7 @@ export default function Login() {
   return (
     <div className="login-body">
       <form onSubmit={(e) => handleSubmit(e)}>
-        <input type="submit" style={{display: "none"}} />
+        <input type="submit" style={{ display: "none" }} />
         <Container sx={{ paddingTop: "100px" }}>
           <Grid
             className="login-container"
@@ -47,6 +47,8 @@ export default function Login() {
               backgroundColor: "lightgrey",
               maxWidth: "600px",
               pr: 10,
+              pt: 3,
+              pb: 5,
               pl: 7,
               borderRadius: 2,
               m: "0 auto",
@@ -91,8 +93,25 @@ export default function Login() {
                 Login
               </Button>
             </Grid>
-            <Grid item>
-              <p>Already have an account?</p>
+            <Grid item xs={6}>
+              <Typography>
+                Don't have an account yet? 
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography
+                color={'blue'}
+              >
+                <Link
+                  href="/auth/signup"
+                  style={{
+                    textDecoration: "underline",
+                    color: "blue"
+                  }}
+                >
+                  Sign Up here!
+                </Link>
+              </Typography>
             </Grid>
           </Grid>
         </Container>

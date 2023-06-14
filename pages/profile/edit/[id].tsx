@@ -10,12 +10,12 @@ import { Profile } from "../../../interfaces/Profile";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 
 interface ProfileCreation {
-    user_id: string;
-    nationality: string;
-    age: string;
-    gender: string;
-    position: string;
-    level: string;
+  user_id: string;
+  nationality: string;
+  age: string;
+  gender: string;
+  position: string;
+  level: string;
 }
 
 export default function EditProfile() {
@@ -33,37 +33,57 @@ export default function EditProfile() {
   });
 
   useEffect(() => {
-    if (!id || typeof id !== 'string') return;
+    if (!id || typeof id !== "string") return;
     dispatch(getProfileFromUserId(id));
   }, [id, dispatch]);
 
+  useEffect(() =>{ 
+    setProfileState()
+  }, [profile])
+
   function clearForm() {
     setProfObj({
-        user_id: "",
-        nationality: "",
-        age: "",
-        gender: "",
-        position: "",
-        level: "",
-    })
+      user_id: "",
+      nationality: "",
+      age: "",
+      gender: "",
+      position: "",
+      level: "",
+    });
   }
 
   const handleSubmit = (e: FormEvent<HTMLElement>) => {
     e.preventDefault();
     console.log("USER PROFILE: ", profObj);
-    
+
     const dataObj: Profile = {
-        user_id: String(id),
-        nationality: profObj.nationality,
-        age: Number(profObj.age),
-        gender: profObj.gender,
-        position: profObj.position,
-        level: profObj.level,
+      user_id: String(id),
+      nationality: profObj.nationality,
+      age: Number(profObj.age),
+      gender: profObj.gender,
+      position: profObj.position,
+      level: profObj.level,
+    };
+    if (profile) {
+        dispatch(updateProfile(dataObj));
+    } else {
+        dispatch(createProfile(dataObj));
+        clearForm();
     }
-    dispatch(createProfile(dataObj))
-    clearForm();
-    router.push("/")
+        router.push("/");
   };
+
+  function setProfileState() {
+    if (!profile) return;
+    setProfObj({
+      user_id: profile.user_id!,
+      nationality: profile.nationality,
+      age: String(profile.age),
+      gender: profile.gender,
+      position: profile.position,
+      level: profile.level,
+    });
+  }
 
   return (
     <Container className="login-body">
@@ -83,7 +103,16 @@ export default function EditProfile() {
         >
           <Grid item xs={12}>
             {profile ? (
-              JSON.stringify(profile)
+              <Typography
+                sx={{
+                  m: "0 auto",
+                  display: "flex",
+                }}
+                variant="h4"
+                fontWeight={600}
+              >
+                Edit Profile
+              </Typography>
             ) : (
               <Typography
                 sx={{
@@ -120,9 +149,7 @@ export default function EditProfile() {
             <Input
               placeholder="Age"
               value={profObj.age}
-              onChange={(e) =>
-                setProfObj({ ...profObj, age: e.target.value})
-              }
+              onChange={(e) => setProfObj({ ...profObj, age: e.target.value })}
               sx={{
                 minWidth: "350px",
                 fontSize: "15px",
