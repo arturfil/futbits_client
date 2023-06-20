@@ -84,7 +84,7 @@ export default function UserProfile() {
       </Grid>
 
       <Grid container rowSpacing={2}>
-        <Grid item xs={6} spacing={2} sx={{}}>
+        <Grid item xs={6} sx={{}}>
           <Typography variant="h5" fontWeight={600}>
             Profile
           </Typography>

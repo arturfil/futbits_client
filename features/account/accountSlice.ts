@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import agent from "../../api/agent";
 import { User } from "../../interfaces/User";
+import { getAllGroupOfAUser } from "../groups/groupSlice";
 
 interface AccountState {
     user: User | null;
@@ -62,6 +63,11 @@ export const loginUser = createAsyncThunk<User, any>(
             localStorage.setItem("jwt_gochi", JSON.stringify({token}))
             toast.success("Successfully Logged In")
             thunkAPI.dispatch(setLogIn(true));
+            console.log("USER", response.data)
+            const id = await response.data.User.id
+            if (id) {
+                thunkAPI.dispatch(getAllGroupOfAUser(id))
+            }
             return response.data.user;
         } catch (error:any) {
             toast.error("Wrong credentials");

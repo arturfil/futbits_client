@@ -24,7 +24,7 @@ export default function Profile() {
     if (!user?.id) return;
     dispatch(getProfileFromUserId(user?.id!));
     dispatch(getAllReportsOfUser(user?.id!));
-  }, [user?.id]);
+  }, [user?.id, dispatch]);
 
   return (
     <Container sx={{ marginTop: 10, marginBottom: 10 }}>

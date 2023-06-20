@@ -1,4 +1,5 @@
 export interface Profile {
+    id?: string
     user_id?: string;
     nationality: string;
     age: number;

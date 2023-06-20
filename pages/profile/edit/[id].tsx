@@ -5,6 +5,7 @@ import React, { FormEvent, FormEventHandler, useEffect, useState } from "react";
 import {
   createProfile,
   getProfileFromUserId,
+  updateProfile,
 } from "../../../features/profile/profileSlice";
 import { Profile } from "../../../interfaces/Profile";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
@@ -35,6 +36,7 @@ export default function EditProfile() {
   useEffect(() => {
     if (!id || typeof id !== "string") return;
     dispatch(getProfileFromUserId(id));
+    console.log("PROFILE", profile)
   }, [id, dispatch]);
 
   useEffect(() =>{ 
@@ -57,20 +59,21 @@ export default function EditProfile() {
     console.log("USER PROFILE: ", profObj);
 
     const dataObj: Profile = {
-      user_id: String(id),
+      user_id: String(profObj.user_id),
       nationality: profObj.nationality,
       age: Number(profObj.age),
       gender: profObj.gender,
       position: profObj.position,
       level: profObj.level,
     };
-    if (profile) {
+    if (profile && id) {
+        dataObj.id = String(profile.id);
         dispatch(updateProfile(dataObj));
     } else {
         dispatch(createProfile(dataObj));
         clearForm();
-    }
         router.push("/");
+    }
   };
 
   function setProfileState() {
