@@ -31,7 +31,7 @@ export const createMember = createAsyncThunk<Member, Object>(
     "member/createMember",
     async (data, thunkAPI) => {
         try {
-            const response = await agent.post("/members/create", data);
+            const response = await agent.post("/members/member", data);
             toast.success("Added member successfully");
             return response.data;
         } catch (error) {

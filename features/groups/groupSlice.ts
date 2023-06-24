@@ -45,7 +45,7 @@ export const createNewGroup = createAsyncThunk<Group, Object>(
     async (data, thunkAPI) => {
         try {
             toast.success("Created Group successfully");
-            const response = await agent.post("/groups/create", data);
+            const response = await agent.post("/groups/group", data);
             return response.data;
         } catch (error) {
             return thunkAPI.rejectWithValue({error});

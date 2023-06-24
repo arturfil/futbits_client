@@ -59,7 +59,7 @@ export default function EditProfile() {
     console.log("USER PROFILE: ", profObj);
 
     const dataObj: Profile = {
-      user_id: String(profObj.user_id),
+      user_id: String(id)!,
       nationality: profObj.nationality,
       age: Number(profObj.age),
       gender: profObj.gender,
@@ -72,14 +72,14 @@ export default function EditProfile() {
     } else {
         dispatch(createProfile(dataObj));
         clearForm();
-        router.push("/");
+        // router.push("/");
     }
   };
 
   function setProfileState() {
-    if (!profile) return;
+    if (!profile || !id) return;
     setProfObj({
-      user_id: profile.user_id!,
+      user_id: String(id)!,
       nationality: profile.nationality,
       age: String(profile.age),
       gender: profile.gender,
