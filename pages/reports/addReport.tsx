@@ -90,7 +90,7 @@ export default function AddReport() {
               {games &&
                 games.map((game) => (
                   <option key={game.id} value={game.id}>
-                    {game.field_name} - {game.game_date.split("T")[0].split("-").reverse().join("/")}
+                    {game.field_name} - {game.game_date.toString().split("T")[0].split("-").reverse().join("/")}
                   </option>
                 ))}
             </>

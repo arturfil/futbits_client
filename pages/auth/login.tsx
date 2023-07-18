@@ -94,9 +94,7 @@ export default function Login() {
               </Button>
             </Grid>
             <Grid item xs={6}>
-              <Typography>
-                Don't have an account yet? 
-              </Typography>
+                <Typography>Don&apost have an account yet?</Typography>
             </Grid>
             <Grid item xs={6}>
               <Typography
