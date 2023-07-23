@@ -54,7 +54,7 @@ export default function Group() {
                       <TableCell>{mem.first_name} {mem.last_name}</TableCell>
                       <TableCell>{mem.member_type }</TableCell>
                       <TableCell>
-                        <Link href={`/profile/${mem.user_id}`}>
+                        <Link href={`/profile/${mem?.user_id}`}>
                           <Button variant="contained" disableElevation>View Player</Button>
                         </Link>
                       </TableCell>

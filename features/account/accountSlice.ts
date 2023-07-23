@@ -63,12 +63,13 @@ export const loginUser = createAsyncThunk<User, any>(
             localStorage.setItem("jwt_gochi", JSON.stringify({token}))
             toast.success("Successfully Logged In")
             thunkAPI.dispatch(setLogIn(true));
-            console.log("USER", response.data)
+            thunkAPI.dispatch(setUser(response.data.User));
+            console.log("USER", response.data);
             const id = await response.data.User.id
             if (id) {
-                thunkAPI.dispatch(getAllGroupOfAUser(id))
+                thunkAPI.dispatch(getAllGroupOfAUser(id));
             }
-            return response.data.user;
+            return response.data.User;
         } catch (error:any) {
             toast.error("Wrong credentials");
             return thunkAPI.rejectWithValue({error: error.data})
@@ -121,6 +122,9 @@ export const accountSlice = createSlice({
         builder.addCase(searchUser.fulfilled, (state, action) => {
             state.users = action.payload;
         });
+        builder.addCase(getUserById.fulfilled, (state, action) => {
+            state.user = action.payload;
+        })
     }
 });
 

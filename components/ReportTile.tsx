@@ -4,10 +4,10 @@ import React from 'react'
 import { Report } from '../interfaces/Report'
 
 interface Props {
-  report: Report
+  reports: Report[]
 }
 
-export default function ReportTile({report}: Props) {
+export default function ReportTile({reports}: Props) {
   return (
     <TableContainer component={Paper} elevation={1}>
       <Table>
@@ -25,7 +25,8 @@ export default function ReportTile({report}: Props) {
         </TableHead>
         
         <TableBody>
-          <TableRow>
+        { reports.map(report => (
+          <TableRow key={report.id}>
             <TableCell>{report.game_id}</TableCell>
             <TableCell>{report.assists}</TableCell>
             <TableCell>{report.goals}</TableCell>
@@ -33,9 +34,10 @@ export default function ReportTile({report}: Props) {
             <TableCell>{report.man_of_the_match}</TableCell>
             <TableCell>{report.involvement}</TableCell>
             <TableCell>{report.attitude}</TableCell>
-          </TableRow>
+           </TableRow>
+        ))}
         </TableBody>
-
+       
       </Table>
     </TableContainer>
   )

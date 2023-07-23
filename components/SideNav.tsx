@@ -1,23 +1,20 @@
-import { Box, Button, Grid, IconButton, Typography } from "@mui/material";
-import Link from "next/link";
+import { Box, IconButton, Typography } from "@mui/material";
 import React, { useState } from "react";
 
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { logOut, setLogIn } from "../features/account/accountSlice";
+import { logOut } from "../features/account/accountSlice";
 
 // import icons
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import GrassIcon from "@mui/icons-material/Grass";
 import GroupsIcon from "@mui/icons-material/Groups";
 import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
-import CreditCardIcon from "@mui/icons-material/CreditCard";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
 import LoginIcon from "@mui/icons-material/Login";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import Item from "./Item";
-import { toast } from "react-toastify";
 
 interface Props {
   display: boolean;

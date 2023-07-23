@@ -3,14 +3,13 @@ import {
   Container,
   Grid,
   Paper,
-  TableHead,
   Typography,
 } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
-import DataCard from "../../components/DataCard";
 import ReportTile from "../../components/ReportTile";
+import { getUserById } from "../../features/account/accountSlice";
 import { getProfileFromUserId } from "../../features/profile/profileSlice";
 import { getAllReportsOfUser } from "../../features/reports/reportsSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
@@ -27,7 +26,7 @@ export default function UserProfile() {
     if (!id) return;
     dispatch(getProfileFromUserId(id));
     dispatch(getAllReportsOfUser(id));
-  }, [id]);
+  }, [id, dispatch]);
 
   return (
     <Container sx={{ marginTop: 10, marginBottom: 10 }}>
@@ -119,19 +118,7 @@ export default function UserProfile() {
       </Grid>
 
       <Grid container sx={{ marginTop: 2 }}>
-        {reports &&
-          reports.map((r) => (
-            <Grid
-              key={r.id}
-              item
-              xs={12}
-              md={12}
-              lg={12}
-              sx={{ margin: "10px 0" }}
-            >
-              <ReportTile report={r} />
-            </Grid>
-          ))}
+        {reports ? <ReportTile reports={reports} /> : <h4>No Reports</h4>}
       </Grid>
     </Container>
   );

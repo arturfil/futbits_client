@@ -2,6 +2,7 @@ import { Container, Grid, Paper, Typography } from "@mui/material";
 import type { NextPage } from "next";
 import { useEffect } from "react";
 import DataCard from "../components/DataCard";
+import GroupCard from "../components/GroupCard";
 import { getAllFields } from "../features/fields/fieldSlice";
 import { getAllGames } from "../features/games/gameSlice";
 import { getAllGroupOfAUser, getAllGroups } from "../features/groups/groupSlice";
@@ -59,8 +60,8 @@ const Home: NextPage = () => {
       {groups ? (
         <Grid container spacing={3}>
           {groups?.map((group) => (
-            <Grid key={group.id} item xs={12} md={4} lg={3}>
-              <DataCard type="groups" data={group} color="#1aaaaf"/>
+            <Grid key={group.id} item xs={6} md={4} lg={3}>
+              <GroupCard type="groups" data={group} color="#1aaaaf"/>
             </Grid>
           ))}
         </Grid>
