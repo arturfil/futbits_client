@@ -1,34 +1,42 @@
 import { Input, Select, Option, Button } from "@mui/joy";
 import { Container, Grid, Typography } from "@mui/material";
 import React, { useEffect, useState, MouseEvent } from "react";
-import { Game } from "../../interfaces/Game";
-import { createGame, getAllGames } from '../../features/games/gameSlice';
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { getAllFields } from "../../features/fields/fieldSlice";
+import { Game } from "../../../interfaces/Game";
+import { createGame, getAllGames } from '../../../features/games/gameSlice';
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { getAllFields } from "../../../features/fields/fieldSlice";
+import { useRouter } from "next/router";
 
 interface GameInput {
     field_id: string,
     game_date: string,
-    max_players: string
+    group_id: string,
+    score: string
 }
 
 export default function CreateGamePage() {
+  const router = useRouter();
+  const id = router.query["id"]!
   const { fields } = useAppSelector((state) => state.field);
   const dispatch = useAppDispatch();
+  
   const [game, setGame] = useState<GameInput>({
     field_id: "",
+    group_id: "",
     game_date: "",
-    max_players: ""
+    score: ""
   });
 
   useEffect(() => { 
     dispatch(getAllFields())
-  }, [dispatch])
+    setGame(prevGame => ({...prevGame, group_id: String(id)}))
+  }, [dispatch, id])
 
   function handleSubmit(e: MouseEvent<HTMLButtonElement|any>) {
     e.preventDefault();
     let gameToCreate:Game|any = game;
-    gameToCreate.max_players = parseInt(game.max_players);
+    gameToCreate.group_id = id;
+    gameToCreate.score = game.score;
     gameToCreate.game_date = new Date(game.game_date).toISOString();
     dispatch(createGame(gameToCreate));
   }
@@ -41,9 +49,7 @@ export default function CreateGamePage() {
       }}
     >
       <Typography variant="h4" sx={{ fontWeight: "bold", mt: 2}}>
-        Create Game
-
-
+        Create Game 
       </Typography>
       <Grid container>
         <Grid item sx={{ mt: 2, mb: 3}}>
@@ -72,6 +78,7 @@ export default function CreateGamePage() {
                 console.log(game.game_date);
             }}
             value={game.game_date}
+            // type="datetime-local"
             type="datetime-local"
             sx={{
               minWidth: "450px",
@@ -82,10 +89,10 @@ export default function CreateGamePage() {
               border: "none"
             }}
           />
-          <Input placeholder="Max players"
+          <Input placeholder="Score"
             type="text"
-            onChange={e => setGame({...game, max_players: e.target.value})}
-            value={game.max_players}
+            onChange={e => setGame({...game, score: e.target.value})}
+            value={game.score}
             sx={{
               minWidth: "450px",
               fontSize: "15px",
@@ -94,7 +101,6 @@ export default function CreateGamePage() {
               border: "none"
             }}
           />
-
         </Grid>
         <Grid item xs={12}>
             <Button onClick={(e) => handleSubmit(e)} fullWidth className="button">

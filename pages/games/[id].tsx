@@ -20,10 +20,10 @@ export default function SingleGame()  {
         <Typography variant="h2" sx={{fontWeight: "bold"}}>{ singleGame?.field_name } </Typography>
         <Typography variant="h4" 
             sx={{fontWeight: "bold"}}>
-            { singleGame?.game_date.toString().split("T")[0].split("-").reverse().join("/") } 
+            { singleGame?.game_date?.toString().split("T")[0].split("-").reverse().join("/") } 
             {" "} at {" "}
             {singleGame ? new Date(singleGame.game_date).toLocaleTimeString() : null}
         </Typography>
-        <Typography variant="h5">Max Players: {singleGame?.max_players}</Typography>
+        <Typography variant="h5">Score: {singleGame?.score}</Typography>
       </Container>);
 }

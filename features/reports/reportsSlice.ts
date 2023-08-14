@@ -19,7 +19,19 @@ export const getAllReportsOfUser = createAsyncThunk<Report[], string | string[]>
     "report/getAllReportsOfUser",
     async (user_id, thunkAPI) => {
         try {
-            const response = await agent.get(`reports/${user_id}`);
+            const response = await agent.get(`/reports/user/${user_id}`);
+            return response.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue({error});
+        }
+    }
+);
+
+export const getAllReportsOfGroup = createAsyncThunk<Report[], string | any>(
+    "report/getAllReportsOfGroup",
+    async (group_id, thunkAPI) => {
+        try {
+            const response = await agent.get(`/reports/group/${group_id}`);
             return response.data;
         } catch (error) {
             return thunkAPI.rejectWithValue({error});
@@ -53,6 +65,9 @@ export const reportSlice = createSlice({
         builder.addCase(getAllReportsOfUser.fulfilled, (state, action) => {
             state.reports = action.payload;
         });
+        builder.addCase(getAllReportsOfGroup.fulfilled, (state, action) => {
+            state.reports = action.payload;
+        })
     }
 })
 

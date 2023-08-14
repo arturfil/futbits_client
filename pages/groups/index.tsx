@@ -30,7 +30,7 @@ export default function Groups() {
         {isLoggedIn ? 'Groups where you belong' : "Sign In to see your groups"}
       </Typography>
       <Grid container spacing={3}>
-        {groups?.map((group) => (
+        {groups && groups?.map((group) => (
           <Grid key={group.id} item xs={12} sm={6} md={4} lg={3}>
             <DataCard type="groups" data={group} color="#1a82af" />
           </Grid>

@@ -25,7 +25,6 @@ export default function AuthGuard({ children }: { children: JSX.Element }) {
       return;
     }
     if (JSON.parse(tkn).token) {
-      console.log("We good");
         dispatch(setLogIn(true))
     }
   }

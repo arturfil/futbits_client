@@ -1,13 +1,14 @@
 import { Button, Container, Grid, Typography } from "@mui/material";
-import { Report } from "../../interfaces/Report";
+import { Report } from "../../../interfaces/Report";
 import React, { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { createReport } from "../../features/reports/reportsSlice";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { createReport } from "../../../features/reports/reportsSlice";
 import { toast } from "react-toastify";
 import { Input } from "@mui/joy";
-import { Label } from "@mui/icons-material";
+import { getAllGames } from "../../../features/games/gameSlice";
 
 const inputStyle = {
+  borderStyle: "solid",
   borderColor: "lightgrey",
   backgroundColor: "white",
   minHeight: "40px",
@@ -22,21 +23,29 @@ export default function AddReport() {
   const { user } = useAppSelector((state) => state.account);
   const { games } = useAppSelector((state) => state.games);
   const dispatch = useAppDispatch();
+  const [file, setFile] = useState<string>("");
   const [report, setReport] = useState<Report>({
+    team_side: "", // A or B
     user_id: "",
     game_id: "",
-    assists: 0,
+    player_name: "",
     goals: 0,
-    attendance: 0,
+    assists: 0,
+    won: 0,
     man_of_the_match: 0,
-    attitude: "",
-    involvement: 0,
   });
 
   useEffect(() => {
-    if (!user?.id) return;
-    setReport({ ...report, user_id: user.id });
-  }, [user?.id]);
+    dispatch(getAllGames());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if(!user?.id) return
+    setReport(prevReport => ({
+        ...prevReport,
+        user_id: user?.id!
+    }))
+  }, [user?.id])
 
   function handleSubmit() {
     for (let val of Object.values(report)) {
@@ -45,6 +54,7 @@ export default function AddReport() {
         return;
       }
     }
+    console.log(report);
     dispatch(createReport(report));
   }
 
@@ -53,17 +63,6 @@ export default function AddReport() {
       <Typography sx={{ marginBottom: 2 }} variant="h4" fontWeight={600}>
         Add Report
       </Typography>
-
-      <h4>
-        user_id: {report.user_id} <br/>
-        game_id: {report.game_id} <br/>
-        assists: {report.assists} <br/>
-        goals: {report.goals} <br/>
-        attendance: {report.attendance} <br/>
-        man_of_the_match: {report.man_of_the_match} <br/>
-        attitude: {report.attitude} <br/>
-        involvement: {report.involvement} <br/>
-      </h4>
 
       <Container>
         <Grid
@@ -79,17 +78,22 @@ export default function AddReport() {
             m: "0 auto",
           }}
         >
-          <Grid item xs={6}>
-            <label>User ID</label>
-            <Input
-              sx={inputStyle}
-              type="text"
+          <Grid item xs={6} sx={{ display: "flex", flexDirection: "column" }}>
+            <label>Team Side</label>
+            <select
+              style={inputStyle}
               onChange={(e) =>
-                setReport({ ...report, user_id: e.target.value })
+                setReport({ ...report, team_side: e.target.value })
               }
-              value={report.user_id}
-              placeholder="user_id"
-            />
+            >
+              <option value="">Choose Team Side</option>
+              <option key={"A"} value="A">
+                A
+              </option>
+              <option key={"B"} value="B">
+                B
+              </option>
+            </select>
           </Grid>
           <Grid item xs={6} sx={{ display: "flex", flexDirection: "column" }}>
             <label>Game ID</label>
@@ -117,16 +121,16 @@ export default function AddReport() {
             </select>
           </Grid>
           <Grid item xs={4}>
-            <label>Assists</label>
+            <label>Players Name</label>
             <Input
               sx={inputStyle}
-              type="number"
-              value={report.assists}
+              type="string"
+              value={report.player_name}
               onChange={(e) =>
-                setReport({ ...report, assists: parseInt(e.target.value) })
+                setReport({ ...report, player_name: e.target.value })
               }
               fullWidth
-              placeholder="assists"
+              placeholder="Player's Name"
             />
           </Grid>
           <Grid item xs={4}>
@@ -143,63 +147,70 @@ export default function AddReport() {
             />
           </Grid>
           <Grid item xs={4}>
-            <label>Attendance</label>
+            <label>Assists</label>
             <Input
               sx={inputStyle}
               type="number"
-              value={report.attendance}
+              value={report.assists}
               onChange={(e) =>
-                setReport({ ...report, attendance: parseInt(e.target.value) })
+                setReport({ ...report, assists: parseInt(e.target.value) })
               }
               fullWidth
-              placeholder="attendance"
+              placeholder="assists"
             />
           </Grid>
-          <Grid item xs={4}>
-            <label>Man Of The Match</label>
-            <Input
-              sx={inputStyle}
-              type="number"
-              value={report.man_of_the_match}
+
+          <Grid item xs={6} sx={{ display: "flex", flexDirection: "column" }}>
+            <label>Man of the Match</label>
+            <select
+              style={inputStyle}
               onChange={(e) =>
-                setReport({
-                  ...report,
-                  man_of_the_match: parseInt(e.target.value),
-                })
+                setReport({ ...report, man_of_the_match: Boolean(e.target.value) })
               }
-              fullWidth
-              placeholder="man_of_the_match"
-            />
+            >
+              <option value="">MOTM?</option>
+              <option key={"A"} value={1}>
+                Yes
+              </option>
+              <option key={"B"} value={0}>
+                No
+              </option>
+            </select>
           </Grid>
-          <Grid item xs={4}>
-            <label>Attitude</label>
-            <Input
-              sx={inputStyle}
+          <Grid item xs={6} sx={{ display: "flex", flexDirection: "column" }}>
+            <label>Game Won</label>
+            <select
+              style={inputStyle}
               onChange={(e) =>
-                setReport({ ...report, attitude: e.target.value })
+                setReport({ ...report, won: Boolean(e.target.value) })
               }
-              value={report.attitude}
-              fullWidth
-              placeholder="attitude"
-            />
+            >
+              <option value="">Game Won?</option>
+              <option key={"A"} value={1}>
+                Yes
+              </option>
+              <option key={"B"} value={0}>
+                No
+              </option>
+            </select>
           </Grid>
-          <Grid item xs={4}>
-            <label>Involvement</label>
-            <Input
-              sx={inputStyle}
-              type="number"
-              value={report.involvement}
-              onChange={(e) =>
-                setReport({ ...report, involvement: parseInt(e.target.value) })
-              }
-              fullWidth
-              placeholder="involvement"
-            />
-          </Grid>
+
           <Grid item xs={12}>
             <Button onClick={handleSubmit} fullWidth className="button">
               Create Report
             </Button>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography>Or Upload CSV</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <label>Choose file</label>
+            <Input
+              sx={[inputStyle, { mt: 1 }]}
+              type="file"
+              fullWidth
+              placeholder="involvement"
+            />
           </Grid>
         </Grid>
       </Container>

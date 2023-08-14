@@ -12,9 +12,9 @@ export default function Games() {
   useEffect(() => {
     if (games) return;
     dispatch(getAllGames());
-  }, [games, dispatch])
+  }, [games, dispatch]);
 
-  return ( 
+  return (
     <Container sx={{ marginTop: 10 }}>
       <Typography style={{ fontWeight: 600, marginBottom: 3 }} variant="h4">
         Soccer Games
@@ -28,14 +28,10 @@ export default function Games() {
           ))}
         </Grid>
       ) : (
-        <Typography 
-          variant="h5" 
-          sx={{fontWeight: 'bold'}}>No Soccer Games to Display
+        <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+          No Soccer Games to Display
         </Typography>
       )}
-      <Link  href="/games/createGame">
-        <Button className="button" sx={{mt: 2}}>Create Game</Button>
-      </Link>
     </Container>
   );
 }
