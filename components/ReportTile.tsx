@@ -11,29 +11,30 @@ export default function ReportTile({reports}: Props) {
   return (
     <TableContainer component={Paper} elevation={1}>
       <Table>
-        
         <TableHead>
           <TableRow>
             <TableCell> <Typography fontWeight={600}>game id</Typography> </TableCell>
-            <TableCell> <Typography fontWeight={600}>assists</Typography> </TableCell>
+            <TableCell> <Typography fontWeight={600}>team side</Typography> </TableCell>
+            <TableCell> <Typography fontWeight={600}>user id</Typography> </TableCell>
+            <TableCell> <Typography fontWeight={600}>player name</Typography> </TableCell>
             <TableCell> <Typography fontWeight={600}>goals</Typography> </TableCell>
-            <TableCell> <Typography fontWeight={600}>attendance</Typography> </TableCell>
+            <TableCell> <Typography fontWeight={600}>assists</Typography> </TableCell>
+            <TableCell> <Typography fontWeight={600}>won</Typography> </TableCell>
             <TableCell> <Typography fontWeight={600}>man of the match</Typography>  </TableCell>
-            <TableCell> <Typography fontWeight={600}>involvement</Typography> </TableCell>
-            <TableCell> <Typography fontWeight={600}>attitude</Typography> </TableCell>
           </TableRow>
         </TableHead>
         
         <TableBody>
         { reports.map(report => (
           <TableRow key={report.id}>
-            <TableCell>{report.game_id}</TableCell>
-            <TableCell>{report.assists}</TableCell>
+            <TableCell>{report.id}</TableCell>
+            <TableCell>{report.team_side}</TableCell>
+            <TableCell>{report.user_id}</TableCell>
+            <TableCell>{report.player_name}</TableCell>
             <TableCell>{report.goals}</TableCell>
-            <TableCell>{report.attendance}</TableCell>
-            <TableCell>{report.man_of_the_match}</TableCell>
-            <TableCell>{report.involvement}</TableCell>
-            <TableCell>{report.attitude}</TableCell>
+            <TableCell>{report.assists}</TableCell>
+            <TableCell>{report.won ? "YES" : "NO"}</TableCell>
+            <TableCell>{report.man_of_the_match ? "YES" : "NO"}</TableCell>
            </TableRow>
         ))}
         </TableBody>

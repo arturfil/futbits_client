@@ -2,6 +2,7 @@ import { Button, Container, Grid, Paper, Table, TableBody, TableCell, TableConta
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
+import ReportTile from '../../components/ReportTile'
 import { getSingleGroup } from '../../features/groups/groupSlice'
 import { getAllMembers } from '../../features/members/memberSlice'
 import { getAllReportsOfGroup } from '../../features/reports/reportsSlice'
@@ -94,8 +95,16 @@ export default function Group() {
                 </TableBody>
               </Table>
             </TableContainer>
+           
+           
+          </Grid>
+          <Grid item xs={12}>
+            <Typography sx={{mb: 3}} variant='h4' fontWeight={500}>
+            Reports
+           </Typography> 
 
-            {JSON.stringify(reports)}
+           {reports && <ReportTile reports={reports} /> }
+
           </Grid>
         </Grid>
 

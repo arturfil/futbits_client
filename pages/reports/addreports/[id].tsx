@@ -2,10 +2,14 @@ import { Button, Container, Grid, Typography } from "@mui/material";
 import { Report } from "../../../interfaces/Report";
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { createReport } from "../../../features/reports/reportsSlice";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { toast } from "react-toastify";
 import { Input } from "@mui/joy";
 import { getAllGames } from "../../../features/games/gameSlice";
+import ArrowBack from "@mui/icons-material/ArrowBack";
+import { useRouter } from "next/router";
+import Link from "next/link";
+import { createReport } from "../../../features/reports/reportsSlice";
 
 const inputStyle = {
   borderStyle: "solid",
@@ -19,10 +23,21 @@ const inputStyle = {
   borderRadius: 7,
 };
 
+const backButtonStyle = {
+  display: "flex",
+  backgroundImage: "linear-gradient(90deg, #1bcab6 ,#1bca98)",
+  color: "white",
+  borderRadius: "8px",
+  padding: "5px",
+  paddingRight: "12px"
+};
+
 export default function AddReport() {
   const { user } = useAppSelector((state) => state.account);
   const { games } = useAppSelector((state) => state.games);
   const dispatch = useAppDispatch();
+  const router = useRouter();
+  const id = router.query["id"]!;
   const [file, setFile] = useState<string>("");
   const [report, setReport] = useState<Report>({
     team_side: "", // A or B
@@ -38,14 +53,22 @@ export default function AddReport() {
   useEffect(() => {
     dispatch(getAllGames());
   }, [dispatch]);
+  // I'm going to use this here to avoid creating new objs
+  useEffect(() => {
+    setReport((prevReport) => ({
+      ...prevReport,
+      won: Boolean(prevReport.won),
+      man_of_the_match: Boolean(prevReport.man_of_the_match),
+    }));
+  }, [report.won, report.man_of_the_match]);
 
   useEffect(() => {
-    if(!user?.id) return
-    setReport(prevReport => ({
-        ...prevReport,
-        user_id: user?.id!
-    }))
-  }, [user?.id])
+    if (!user?.id) return;
+    setReport((prevReport) => ({
+      ...prevReport,
+      user_id: user?.id!,
+    }));
+  }, [user?.id]);
 
   function handleSubmit() {
     for (let val of Object.values(report)) {
@@ -54,17 +77,26 @@ export default function AddReport() {
         return;
       }
     }
-    console.log(report);
     dispatch(createReport(report));
   }
 
   return (
     <div className="login-body" style={{ marginTop: 10 }}>
-      <Typography sx={{ marginBottom: 2 }} variant="h4" fontWeight={600}>
-        Add Report
-      </Typography>
+      <Container sx={{ mt: 3 }}>
+        <Grid container sx={{ mb: 3 }}>
+          <Link href={`/groups/${id}`}>
+            <Button sx={[backButtonStyle, { textTransform: "lowercase" }]}>
+              <ArrowBack />
+              <Typography>Go Back To Group</Typography>
+            </Button>
+          </Link>
+          <Grid item xs={6} />
+        </Grid>
 
-      <Container>
+        <Typography sx={{ marginBottom: 2 }} variant="h4" fontWeight={600}>
+          Add Report
+        </Typography>
+
         <Grid
           className="login-container"
           container
@@ -165,14 +197,17 @@ export default function AddReport() {
             <select
               style={inputStyle}
               onChange={(e) =>
-                setReport({ ...report, man_of_the_match: Boolean(e.target.value) })
+                setReport({
+                  ...report,
+                  man_of_the_match: Number(e.target.value),
+                })
               }
             >
               <option value="">MOTM?</option>
-              <option key={"A"} value={1}>
+              <option key={"AWARED"} value={1}>
                 Yes
               </option>
-              <option key={"B"} value={0}>
+              <option key={"NOT AWARDED"} value={0}>
                 No
               </option>
             </select>
@@ -182,16 +217,12 @@ export default function AddReport() {
             <select
               style={inputStyle}
               onChange={(e) =>
-                setReport({ ...report, won: Boolean(e.target.value) })
+                setReport({ ...report, won: Number(e.target.value) })
               }
             >
-              <option value="">Game Won?</option>
-              <option key={"A"} value={1}>
-                Yes
-              </option>
-              <option key={"B"} value={0}>
-                No
-              </option>
+              <option>Game Won?</option>
+              <option value={1}>Yes</option>
+              <option value={0}>No</option>
             </select>
           </Grid>
 
