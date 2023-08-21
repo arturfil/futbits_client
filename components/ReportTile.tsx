@@ -27,9 +27,9 @@ export default function ReportTile({reports}: Props) {
         <TableBody>
         { reports.map(report => (
           <TableRow key={report.id}>
-            <TableCell>{report.id}</TableCell>
+            <TableCell>{report.game_id}</TableCell>
             <TableCell>{report.team_side}</TableCell>
-            <TableCell>{report.user_id}</TableCell>
+            <TableCell>{report.user_id.String}</TableCell>
             <TableCell>{report.player_name}</TableCell>
             <TableCell>{report.goals}</TableCell>
             <TableCell>{report.assists}</TableCell>
