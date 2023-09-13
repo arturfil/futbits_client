@@ -9,7 +9,7 @@ import { getAllGames } from "../../../features/games/gameSlice";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { createReport } from "../../../features/reports/reportsSlice";
+import { createReport, uploadReport } from "../../../features/reports/reportsSlice";
 
 const inputStyle = {
   borderStyle: "solid",
@@ -29,7 +29,7 @@ const backButtonStyle = {
   color: "white",
   borderRadius: "8px",
   padding: "5px",
-  paddingRight: "12px"
+  paddingRight: "12px",
 };
 
 export default function AddReport() {
@@ -38,7 +38,7 @@ export default function AddReport() {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const id = router.query["id"]!;
-  const [file, setFile] = useState<string>("");
+  const [file, setFile] = useState<File>();
   const [report, setReport] = useState<Report>({
     team_side: "", // A or B
     user_id: "",
@@ -53,6 +53,7 @@ export default function AddReport() {
   useEffect(() => {
     dispatch(getAllGames());
   }, [dispatch]);
+
   // I'm going to use this here to avoid creating new objs
   useEffect(() => {
     setReport((prevReport) => ({
@@ -78,6 +79,11 @@ export default function AddReport() {
       }
     }
     dispatch(createReport(report));
+  }
+
+  function handleUploadSubmit() {
+    console.log("FILE:", file)
+    dispatch(uploadReport(file));
   }
 
   return (
@@ -237,11 +243,17 @@ export default function AddReport() {
           <Grid item xs={12}>
             <label>Choose file</label>
             <Input
+              onChange={(e) => setFile(e.target.files![0])}
               sx={[inputStyle, { mt: 1 }]}
               type="file"
               fullWidth
-              placeholder="involvement"
+              placeholder="select file"
             />
+          </Grid>
+          <Grid item xs={12}>
+            <Button onClick={handleUploadSubmit} fullWidth className="button">
+              Upload File
+            </Button>
           </Grid>
         </Grid>
       </Container>

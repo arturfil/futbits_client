@@ -27,6 +27,18 @@ export const getAllReportsOfUser = createAsyncThunk<Report[], string | string[]>
     }
 );
 
+export const getAllReportsOfGame = createAsyncThunk<Report[], string | any>(
+    "report/getAllReportsOfGame",
+    async (game_id, thunkAPI) => {
+        try {
+            const response = await agent.get(`/reports/game/${game_id}`);
+            return response.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue({error});
+        }
+    }
+)
+
 export const getAllReportsOfGroup = createAsyncThunk<Report[], string | any>(
     "report/getAllReportsOfGroup",
     async (group_id, thunkAPI) => {
@@ -53,6 +65,32 @@ export const createReport = createAsyncThunk<Report, Object>(
     }
 );
 
+export const uploadReport = createAsyncThunk<Report, Object | any>(
+    "report/uploadReport",
+    async (data, thunkAPI) => {
+        // create form data object
+        const fmData = new FormData();
+        const config = {
+            headers: {
+                "content-type": `multipart/form-data`
+            }
+        }
+        fmData.append(
+            "reports",
+            data,
+        )
+        console.log("dispatch", data)
+        try {
+            toast.success("Report was created successfully");
+            const response = await agent.post("/reports/upload", fmData, config);
+            return response.data
+        } catch(error) {
+            toast.error("Couldn't upload the file");
+            return thunkAPI.rejectWithValue({error})
+        }
+    }
+)
+
 export const reportSlice = createSlice({
     name: "report",
     initialState,
@@ -66,6 +104,9 @@ export const reportSlice = createSlice({
             state.reports = action.payload;
         });
         builder.addCase(getAllReportsOfGroup.fulfilled, (state, action) => {
+            state.reports = action.payload;
+        })
+        builder.addCase(getAllReportsOfGame.fulfilled, (state, action) => {
             state.reports = action.payload;
         })
     }
