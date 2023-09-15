@@ -2,7 +2,7 @@ export interface Report {
     id?: string;
     team_side: string;
     game_id: string;
-    user_id: UserId; 
+    user_id: UserId;
     player_name: string
     goals: number;
     assists: number;
@@ -12,7 +12,7 @@ export interface Report {
     updated_at?: Date;
 }
 
-interface UserId {
+export interface UserId {
     String: string;
     Valid: boolean;
 }

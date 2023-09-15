@@ -1,6 +1,6 @@
 import { Button, Container, Grid, Typography } from "@mui/material";
 import { Report } from "../../../interfaces/Report";
-import React, { useEffect, useState } from "react";
+import React, { SetStateAction, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { toast } from "react-toastify";
@@ -10,6 +10,20 @@ import ArrowBack from "@mui/icons-material/ArrowBack";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { createReport, uploadReport } from "../../../features/reports/reportsSlice";
+
+interface ReportDTO {
+    id?: string;
+    team_side: string;
+    game_id: string;
+    user_id: "";
+    player_name: string
+    goals: number;
+    assists: number;
+    won: boolean | number;
+    man_of_the_match: boolean | number;
+    created_at?: Date;
+    updated_at?: Date;
+}
 
 const inputStyle = {
   borderStyle: "solid",
@@ -39,7 +53,7 @@ export default function AddReport() {
   const router = useRouter();
   const id = router.query["id"]!;
   const [file, setFile] = useState<File>();
-  const [report, setReport] = useState<Report>({
+  const [report, setReport] = useState<ReportDTO>({
     team_side: "", // A or B
     user_id: "",
     game_id: "",
@@ -65,7 +79,7 @@ export default function AddReport() {
 
   useEffect(() => {
     if (!user?.id) return;
-    setReport((prevReport) => ({
+    setReport((prevReport: any) => ({
       ...prevReport,
       user_id: user?.id!,
     }));
