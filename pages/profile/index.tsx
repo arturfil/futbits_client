@@ -85,12 +85,7 @@ export default function Profile() {
       </Grid>
 
       <Grid container sx={{marginTop: 2}}> 
-        { reports && reports.map(r => (
-            <Grid key={r.id} item xs={12} md={12} lg={12} sx={{margin: '10px 0'}}>
-              <ReportTile report={r} />
-            </Grid>
-          ))
-        }
+        
       </Grid>
 
     </Container>
