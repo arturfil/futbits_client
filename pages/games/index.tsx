@@ -7,12 +7,14 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 export default function Games() {
   const { games } = useAppSelector((state) => state.games);
+  const { user } = useAppSelector((state) => state.account);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (games) return;
-    dispatch(getAllGames());
-  }, [games, dispatch]);
+    if (!user?.id) return;
+    dispatch(getAllGames(user?.id));
+  }, [games, dispatch, user?.id]);
 
   return (
     <Container sx={{ marginTop: 10 }}>
