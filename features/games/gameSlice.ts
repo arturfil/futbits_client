@@ -17,11 +17,11 @@ const initialState: GameState = {
     loading: false
 }
 
-export const getAllGames = createAsyncThunk<Game[]>(
+export const getAllGames = createAsyncThunk<Game[], string>(
     "game/getAllGames",
-    async (_, thunkAPI) => {
+    async (id, thunkAPI) => {
         try {
-            const response = await agent.get("/games");
+            const response = await agent.get(`/games/${id}`);
             return response.data.games;
         } catch (error) {
             return thunkAPI.rejectWithValue({error})
@@ -47,7 +47,7 @@ export const createGame = createAsyncThunk<Game, Game>(
         try {
             toast.success("Successfully created game!")
             const response = await agent.post("/games/game", data);
-            thunkAPI.dispatch(getAllGames());
+            // thunkAPI.dispatch(getAllGames());
             return response.data;
         } catch (error) {
             return thunkAPI.rejectWithValue({error});

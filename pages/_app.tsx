@@ -9,9 +9,9 @@ import NavBar from "../components/NavBar";
 import AuthGuard from "../components/AuthGuard";
 import { NextPage } from "next";
 import RoutesWrapper from "../components/RoutesWrapper";
-import { Box, Grid } from "@mui/material";
+import { Box } from "@mui/material";
 import SideNav from "../components/SideNav";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 export type NextApplicationPage<P = any, IP = P> = NextPage<P, IP> & {
   requiredAuth?: boolean;

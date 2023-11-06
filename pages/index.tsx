@@ -17,12 +17,12 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     dispatch(getAllFields());
-    dispatch(getAllGames());
   }, []);
   
   useEffect(() => {
     if (!user?.id) return;
     dispatch(getAllGroupOfAUser(user?.id));
+    dispatch(getAllGames(user?.id));
   }, [user?.id])
 
   return (
