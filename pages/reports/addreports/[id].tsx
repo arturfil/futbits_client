@@ -65,8 +65,9 @@ export default function AddReport() {
   });
 
   useEffect(() => {
-    dispatch(getAllGames());
-  }, [dispatch]);
+    if (!user?.id) return
+    dispatch(getAllGames(user?.id));
+  }, [dispatch, user?.id]);
 
   // I'm going to use this here to avoid creating new objs
   useEffect(() => {
