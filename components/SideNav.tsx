@@ -32,7 +32,7 @@ export default function SideNav({ display, setDisplay }: Props) {
         sx={{
           position: "fixed",
           backgroundImage: "linear-gradient(20deg, #517479, #293b5d)",
-          height: "100vh",
+          height: "100%",
         }}
       >
         <Box sx={{ display: "flex", justifyContent: "space-between", p: 3 }}>

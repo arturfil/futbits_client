@@ -31,7 +31,7 @@ function MyApp(props: AppProps) {
         <Box sx={{ display: "flex", flexDirection: "row", mb: "20px", position: "-webkit-sticky", top: "0",}}>
           <Box
             className={!display ? "sidebar-seen sidebar" : "sidebar"}
-            sx={{ width: display ? "258px" : "70px", position: "sticky", top: "0", height: "100vh" }}
+            sx={{ width: display ? "258px" : "70px", position: "sticky", top: "0"}}
           >
             <SideNav display={display} setDisplay={setDisplay} />
           </Box>
