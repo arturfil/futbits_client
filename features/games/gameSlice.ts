@@ -10,6 +10,11 @@ interface GameState {
     loading: Boolean;
 }
 
+interface GameSubmitObj {
+    id: string
+    gameToCreate: Game
+}
+
 const initialState: GameState = {
     games: null,
     singleGame: null,
@@ -41,20 +46,21 @@ export const getSingleGame = createAsyncThunk<Game, string | string[]>(
     }
 )
 
-export const createGame = createAsyncThunk<Game, Game>(
+// TODO: change any for 
+export const createGame = createAsyncThunk<Game, Game | GameSubmitObj | any>(
     "game/createGame",
     async (data, thunkAPI) => {
+        const {id, gameToCreate} = data
         try {
             toast.success("Successfully created game!")
-            const response = await agent.post("/games/game", data);
-            // thunkAPI.dispatch(getAllGames());
+            const response = await agent.post("/games/game", gameToCreate);
+            thunkAPI.dispatch(getAllGames(id));
             return response.data;
         } catch (error) {
             return thunkAPI.rejectWithValue({error});
         }
     }
 )
-
 
 export const gameSlice = createSlice({
     name: "game",

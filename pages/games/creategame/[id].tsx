@@ -18,6 +18,7 @@ export default function CreateGamePage() {
   const router = useRouter();
   const id = router.query["id"]!
   const { fields } = useAppSelector((state) => state.field);
+  const { user } = useAppSelector(state => state.account);
   const dispatch = useAppDispatch();
   
   const [game, setGame] = useState<GameInput>({
@@ -38,7 +39,8 @@ export default function CreateGamePage() {
     gameToCreate.group_id = id;
     gameToCreate.score = game.score;
     gameToCreate.game_date = new Date(game.game_date).toISOString();
-    dispatch(createGame(gameToCreate));
+    if (!user?.id) return
+    dispatch(createGame({id, gameToCreate}));
   }
 
   return (
