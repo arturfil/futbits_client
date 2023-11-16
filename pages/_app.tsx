@@ -22,7 +22,7 @@ function MyApp(props: AppProps) {
     Component,
     pageProps,
   }: { Component: NextApplicationPage; pageProps: any } = props;
-  const [display, setDisplay] = useState<boolean>(true);
+  const [display, setDisplay] = useState<boolean>(false);
 
   return (
     <Provider store={store}>

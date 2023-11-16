@@ -62,6 +62,19 @@ export const createGame = createAsyncThunk<Game, Game | GameSubmitObj | any>(
     }
 )
 
+export const updateGame = createAsyncThunk<void,  Game | GameSubmitObj | any>(
+    "game/updateGame",
+    async (data, thunkAPI) => {
+        const {id, ...game} = data;
+        try {
+            toast.success("Successfully updated the game") 
+            await agent.put(`/games/update/${id}`, game)
+        } catch (error) {
+            return thunkAPI.rejectWithValue({error}) 
+        }
+    }
+)
+
 export const gameSlice = createSlice({
     name: "game",
     initialState,

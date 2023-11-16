@@ -40,7 +40,8 @@ export default function CreateGamePage() {
     gameToCreate.score = game.score;
     gameToCreate.game_date = new Date(game.game_date).toISOString();
     if (!user?.id) return
-    dispatch(createGame({id, gameToCreate}));
+    console.log(game.game_date)
+    // dispatch(createGame({id, gameToCreate}));
   }
 
   return (
