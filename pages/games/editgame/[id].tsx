@@ -7,7 +7,6 @@ import { getSingleGame, updateGame } from "../../../features/games/gameSlice";
 import { Field } from "../../../interfaces/Field";
 import { GameInput } from "../../../interfaces/GameInput";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import SingleGame from "../[id]";
 
 export default function EditGame() {
   const dispatch = useAppDispatch();
@@ -40,7 +39,7 @@ export default function EditGame() {
     if (!singleGame) return
 
     setGame({
-      field_id: singleGame?.id!,
+      field_id: singleGame?.field_id!,
       group_id: singleGame?.group_id!,
       game_date: String(singleGame.game_date)!,
       score: singleGame?.score!,
@@ -55,7 +54,6 @@ export default function EditGame() {
         id: id,
         field_id	: game.field_id,
         game_date	: new Date(game.game_date).toISOString(),
-        group_id	: game.group_id,
         score		: game.score,
     }
 
@@ -76,6 +74,7 @@ export default function EditGame() {
       <Typography variant="h4" sx={{ fontWeight: "bold", mt: 2 }}>
         Update Game
       </Typography>
+      <p>{game.field_id}</p>
       <Grid container>
         <Grid item sx={{ mt: 2, mb: 3 }}>
           <select
