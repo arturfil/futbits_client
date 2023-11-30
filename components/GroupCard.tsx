@@ -19,7 +19,7 @@ export default function GroupCard({ data, color, type }: Props) {
             display: "flex",
             borderRadius: "12px",
             maxHeight: "171px",
-            minHeight: "130px",
+            minHeight: "171px",
             border: "1px solid lightgrey",
             justifyContent: "center",
             alignItems: "center",

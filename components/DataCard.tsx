@@ -2,12 +2,30 @@ import { Grid, Paper, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import fieldImage from '../images/miami_soccer_field.jpeg'
+import fieldImage from '../images/field_logo3.png'
+import gameImage from "../images/game_icon.png"
+import groupImage from "../images/game_icon.png"
 
 interface Props {
   data: any;
   color?: string;
   type?: string;
+}
+
+function returnImage(type: string) {
+    switch (type) {
+        case "fields":
+            return fieldImage 
+            break;
+        case "games":
+            return gameImage
+            break
+        case "groups":
+            return groupImage
+            break
+        default:
+            break;
+    }
 }
 
 
@@ -27,11 +45,11 @@ export default function DataCard({ data, color, type }: Props) {
         >
         <Image 
             height={200}
-            width={320}
+            width={200}
             style={{
                 borderRadius: "12px",
             }}
-            src={fieldImage} alt="soccer field"
+            src={returnImage(type)} alt="soccer field"
         />
         </Paper>
         <Typography color="black" fontWeight={600}>
