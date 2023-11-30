@@ -49,7 +49,7 @@ export default function DataCard({ data, color, type }: Props) {
             style={{
                 borderRadius: "12px",
             }}
-            src={returnImage(type)} alt="soccer field"
+            src={type === "games" ? gameImage : fieldImage} alt="soccer field"
         />
         </Paper>
         <Typography color="black" fontWeight={600}>

@@ -39,12 +39,12 @@ a {
 }
 
 .menu {
-  display: none;
+  display: none!important;
 }
 
 @media (max-width: 428px) {
   .menu {
-    display: flex;
+    display: flex!important;
   }
 
   .sidebar-seen {
