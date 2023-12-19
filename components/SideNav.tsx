@@ -19,9 +19,10 @@ import Item from "./Item";
 interface Props {
   display: boolean;
   setDisplay: Function;
+  width: string;
 }
 
-export default function SideNav({ display, setDisplay }: Props) {
+export default function SideNav({ display, setDisplay, width }: Props) {
   const [name, setName] = useState("Home");
   const dispatch = useAppDispatch();
   const { isLoggedIn, user } = useAppSelector((state) => state.account);
@@ -31,6 +32,7 @@ export default function SideNav({ display, setDisplay }: Props) {
       <Box
         sx={{
           position: "fixed",
+          width: width,
           backgroundImage: "linear-gradient(20deg, #517479, #293b5d)",
           height: "100%",
         }}

@@ -22,7 +22,7 @@ function MyApp(props: AppProps) {
     Component,
     pageProps,
   }: { Component: NextApplicationPage; pageProps: any } = props;
-  const [display, setDisplay] = useState<boolean>(false);
+  const [display, setDisplay] = useState<boolean>(true);
 
   return (
     <Provider store={store}>
@@ -33,7 +33,7 @@ function MyApp(props: AppProps) {
             className={!display ? "sidebar-seen sidebar" : "sidebar"}
             sx={{ width: display ? "258px" : "70px", position: "sticky", top: "0"}}
           >
-            <SideNav display={display} setDisplay={setDisplay} />
+            <SideNav display={display} width={display ? "258px" : "70px"} setDisplay={setDisplay} />
           </Box>
           <Box sx={{ flex: "258px" }}>
             <NavBar display={display} setDisplay={setDisplay} />

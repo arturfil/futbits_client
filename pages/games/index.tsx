@@ -37,3 +37,5 @@ export default function Games() {
     </Container>
   );
 }
+
+Games.requiredAuth = true

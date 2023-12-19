@@ -36,3 +36,5 @@ export default function Fields() {
     </Container>
   );
 }
+
+Fields.requiredAuth = true

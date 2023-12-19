@@ -3,9 +3,13 @@ import type { NextPage } from "next";
 import { useEffect } from "react";
 import DataCard from "../components/DataCard";
 import GroupCard from "../components/GroupCard";
+import LandingPage from "../components/layout/LandingPage";
 import { getAllFields } from "../features/fields/fieldSlice";
 import { getAllGames } from "../features/games/gameSlice";
-import { getAllGroupOfAUser, getAllGroups } from "../features/groups/groupSlice";
+import {
+  getAllGroupOfAUser,
+  getAllGroups,
+} from "../features/groups/groupSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 
 const Home: NextPage = () => {
@@ -18,14 +22,14 @@ const Home: NextPage = () => {
   useEffect(() => {
     dispatch(getAllFields());
   }, []);
-  
+
   useEffect(() => {
     if (!user?.id) return;
     dispatch(getAllGroupOfAUser(user?.id));
     dispatch(getAllGames(user?.id));
-  }, [user?.id])
+  }, [user?.id]);
 
-  return (
+  const HomePage = () => (
     <Container sx={{ marginTop: 10, paddingBottom: 5 }} maxWidth="lg">
       <Typography sx={{ fontWeight: 600 }} variant="h4">
         Home Page
@@ -33,27 +37,27 @@ const Home: NextPage = () => {
       <Typography sx={{ marginTop: 3 }} variant="h6">
         Fields
       </Typography>
-      { fields ? (
+      {fields ? (
         <Grid sx={{ marginBottom: 3 }} container spacing={3}>
           {fields?.map((field) => (
             <Grid key={field.id} item xs={6} md={4} lg={3}>
-              <DataCard type="fields" data={field} color="#1a82af"/>
+              <DataCard type="fields" data={field} color="#1a82af" />
             </Grid>
           ))}
         </Grid>
-      ): (
+      ) : (
         <Typography color="red">No Fields Created Yet</Typography>
       )}
       <Typography variant="h6">Games</Typography>
-      { games ? (
+      {games ? (
         <Grid sx={{ marginBottom: 3 }} container spacing={3}>
           {games?.map((game) => (
             <Grid key={game.id} item xs={6} md={4} lg={3}>
-              <DataCard type="games" data={game} color="#27baa2"/>
+              <DataCard type="games" data={game} color="#27baa2" />
             </Grid>
           ))}
         </Grid>
-      ): (
+      ) : (
         <Typography color="red">No Games Yet</Typography>
       )}
       <Typography variant="h6">Groups You Belong To</Typography>
@@ -61,7 +65,7 @@ const Home: NextPage = () => {
         <Grid container spacing={3}>
           {groups?.map((group) => (
             <Grid key={group.id} item xs={6} md={4} lg={3}>
-              <GroupCard type="groups" data={group} color="#1aaaaf"/>
+              <GroupCard type="groups" data={group} color="#1aaaaf" />
             </Grid>
           ))}
         </Grid>
@@ -70,6 +74,10 @@ const Home: NextPage = () => {
       )}
     </Container>
   );
+
+  return (
+    <LandingPage/>
+  )
 };
 
 export default Home;

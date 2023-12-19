@@ -54,3 +54,5 @@ export default function Groups() {
     </Container>
   );
 }
+
+Groups.requiredAuth = true
