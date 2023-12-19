@@ -1,12 +1,11 @@
 import {
-  Button,
   Card,
   CardActionArea,
-  CardActions,
   CardContent,
   CardMedia,
   Typography,
 } from "@mui/material";
+import Image, { StaticImageData } from "next/image";
 import React from "react";
 
 interface CardProps {
@@ -20,10 +19,11 @@ export default function IntroCard({description, imgURL, title}: CardProps) {
     <div>
       <Card sx={{ maxWidth: 345, borderRadius: 3 }} elevation={0}>
         <CardActionArea>
-          <CardMedia
-            component="img"
-            height="140"
-            image={imgURL}
+          <Image
+            style={{maxHeight: "100px", overflow: "hidden"}}
+            height="140px"
+            width={"345px"}
+            src={imgURL}
             alt="soccer1"
           />
           <CardContent>

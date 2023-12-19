@@ -2,20 +2,22 @@ import { Box, Container, Grid, Typography } from "@mui/material";
 import React from "react";
 import IntroCard from "./IntroCard";
 
-import card1 from "../../images/soccer-card1.jpg";
-import card2 from "../../images/soccer-card2.jpg";
-import card3 from "../../images/soccer-card3.jpg";
+const card1 = "/images/soccer-card1.jpg";
+const card2 = "/images/soccer-card2.jpg";
+const card3 = "/images/soccer-card3.jpg";
 
 const images = [
-  { title: "Play", url: card1.src, description: "Play with your frieds" },
+  { title: "Play", 
+    url: "/images/soccer-card1.jpg", 
+    description: "Play with your frieds" },
   {
     title: "Save Your Data",
-    url: card2.src,
+    url: "/images/soccer-card2.jpg",
     description: "Record who won, who scored, who lost",
   },
   {
     title: "Compare",
-    url: card3.src,
+    url: "/images/soccer-card3.jpg",
     description: "Compare results, rankigs and more!",
   },
 ];

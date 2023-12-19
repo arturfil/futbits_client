@@ -17,12 +17,12 @@ export default function Fields() {
         Some of the fields that we have worked with:
       </Typography>
 
-      <Grid sx={{display: "flex", justifyContent: "space-around"}}>
+      <Grid container spacing={2} sx={{display: "flex", justifyContent: "space-around"}}>
         {fields.map((field) => (
-          <Grid key={field}>
+          <Grid sx={{display: "flex"}} item key={field} sm={12} md={4}>
             <Typography
               variant="body2"
-              sx={{ fontSize: "22px", color: "#2A2423", my: 4 }}
+              sx={{ fontSize: "22px", color: "#2A2423", my: 4 , margin: "0 auto"}}
             >
               {field}
             </Typography>
