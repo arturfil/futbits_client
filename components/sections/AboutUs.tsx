@@ -65,12 +65,12 @@ export default function AboutUs() {
           >
             Sign in, create your group and start tracking!
             <br />
-            You can start adding stats by uploading csv's!
+            You can start adding stats by uploading csv&#39;s!
           </Typography>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <Grid container spacing={2}>
-            {images.map((image: { description: string; url: string }) => (
+            {images.map((image: { description: string, url: string, title: string}) => (
               <Grid
                 sx={{ margin: "0 auto" }}
                 item
